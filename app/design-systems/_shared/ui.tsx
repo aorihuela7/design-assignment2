@@ -2,7 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import type { records } from "./records";
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, KeyboardEvent, ReactNode, SelectHTMLAttributes } from "react";
 
 // The Calm control library. Every control styles its states with the st-* variants, which match the
 // real :hover / :focus-visible / :active / :disabled and also a data-state attribute. A labeled static
@@ -304,6 +304,22 @@ export function Badge({ children }: { children: ReactNode }) {
 const DIALOG =
   "m-auto w-[min(92vw,28rem)] rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-0 font-ds-body text-ds-body text-ds-text backdrop:bg-(--ds-backdrop)";
 
+/** Native showModal() makes the page inert, but Tab can still leave for the browser UI. Wrap it. */
+function keepFocusInside(e: KeyboardEvent<HTMLDialogElement>) {
+  if (e.key !== "Tab") return;
+  const items = [...e.currentTarget.querySelectorAll<HTMLElement>("button, input, select, textarea, a[href]")].filter((el) => !el.hasAttribute("disabled"));
+  if (items.length === 0) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 function CloseButton({ onClick }: { onClick: () => void }) {
   return (
     <button
@@ -378,7 +394,7 @@ export function RecordList({ items, art }: { items: readonly RecordItem[]; art: 
           </li>
         ))}
       </ul>
-      <dialog ref={ref} aria-labelledby="record-title" onClick={(e) => e.target === ref.current && ref.current?.close()} className={DIALOG}>
+      <dialog ref={ref} aria-labelledby="record-title" onClick={(e) => e.target === ref.current && ref.current?.close()} onKeyDown={keepFocusInside} className={DIALOG}>
         {current && (
           <div className="p-ds-24">
             <div className="flex items-start justify-between gap-ds-16">
@@ -416,7 +432,7 @@ export function LogModal() {
       <Button variant="primary" onClick={() => ref.current?.showModal()}>
         Log a record
       </Button>
-      <dialog ref={ref} aria-labelledby="log-title" onClick={(e) => e.target === ref.current && ref.current?.close()} className={DIALOG}>
+      <dialog ref={ref} aria-labelledby="log-title" onClick={(e) => e.target === ref.current && ref.current?.close()} onKeyDown={keepFocusInside} className={DIALOG}>
         <form
           method="dialog"
           onSubmit={(e) => {
