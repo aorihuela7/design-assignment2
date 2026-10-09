@@ -20,6 +20,17 @@
   --color-signal: #e4472b;
   --color-navy: #1e3a6b;
 
+  --color-night: #0d0618;
+  --color-grape: #1a0f2e;
+  --color-edge: #4a3480;
+  --color-magenta: #ff2e93;
+  --color-cyan: #19e3f0;
+  --color-volt: #ffe600;
+  --color-warm: #f6ebdd;
+
+  --font-neon: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
   --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   --font-plain: "Helvetica Neue", Arial, sans-serif;
 }
@@ -33,4 +44,24 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 2px;
+}
+
+/* Jukebox: cut corners (top-left, bottom-right) drawn as an outer clip plus an inset clip. */
+.cut {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+.cut-in {
+  clip-path: polygon(13px 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%, 0 13px);
+}
+
+/* Jukebox: the neon glow, used on the headline, the LOG +1 hover and one card. */
+.glow-text {
+  text-shadow: 0 0 6px rgb(255 46 147 / 0.9), 0 0 26px rgb(255 46 147 / 0.55);
+}
+.glow-box {
+  filter: drop-shadow(0 0 6px rgb(255 46 147 / 0.8)) drop-shadow(0 0 18px rgb(255 46 147 / 0.45));
+}
+
+.theme-night :focus-visible {
+  outline-color: var(--color-cyan);
 }
