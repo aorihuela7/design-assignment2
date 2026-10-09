@@ -53,9 +53,10 @@ export function Button({
       {...props}
       {...s}
       className={join(
-        "inline-flex min-h-11 items-center justify-center gap-calm-8 whitespace-nowrap rounded-calm-12 px-calm-16 py-calm-8 text-calm-body font-medium st-disabled:cursor-not-allowed",
+        "inline-flex min-h-11 items-center justify-center gap-calm-8 whitespace-nowrap rounded-calm-12 px-calm-16 py-calm-8 text-calm-body font-medium st-press:scale-95 st-disabled:cursor-not-allowed",
         BUTTON[variant],
-        control,
+        focusRing,
+        "transition-[color,background-color,border-color,transform] duration-200 ease-out motion-reduce:transition-none",
         className,
         s.className,
       )}
