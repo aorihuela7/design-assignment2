@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import HubLink from "../../hub-link";
 import { GrooveDetail, Label, Record, Sleeve, Stylus, Texture, Tonearm, Turntable } from "./art";
 
 export const metadata: Metadata = { title: "Calm · Matte · Warm — Mood Board" };
@@ -248,9 +249,22 @@ const ARTIFACTS: Artifact[] = [
   },
 ];
 
+const hubTheme = {
+  "--hub-font": "var(--font-sans)",
+  "--hub-size": "14px",
+  "--hub-weight": "400",
+  "--hub-tracking": "normal",
+  "--hub-transform": "none",
+  "--hub-fg": "var(--color-muted)",
+  "--hub-fg-hover": "var(--color-ink)",
+  "--hub-ring": "var(--color-ink)",
+  "--hub-radius": "6px",
+} as CSSProperties;
+
 export default function CalmMoodBoard() {
   return (
-    <main className="mx-auto max-w-[1440px] px-5 pb-16 pt-12 md:px-10 md:pt-20">
+    <main style={hubTheme} className="mx-auto max-w-[1440px] px-5 pb-16 pt-6 md:px-10 md:pt-10">
+      <HubLink className="mb-6 md:mb-10" />
       <header className="mb-12 md:mb-16">
         <p className="text-xs uppercase tracking-widest text-muted">Mood board · 1 of 3</p>
         <h1 className="mt-3 font-serif text-5xl leading-tight md:text-7xl">Calm · Matte · Warm</h1>

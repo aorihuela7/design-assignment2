@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import HubLink from "../../hub-link";
 import {
   Boombox,
   Cassette,
@@ -159,10 +160,23 @@ const ARTIFACTS: Artifact[] = [
   },
 ];
 
+const hubTheme = {
+  "--hub-font": "var(--font-mono)",
+  "--hub-size": "11px",
+  "--hub-weight": "500",
+  "--hub-tracking": "0.18em",
+  "--hub-transform": "uppercase",
+  "--hub-fg": "color-mix(in srgb, var(--color-warm) 78%, var(--color-night))",
+  "--hub-fg-hover": "var(--color-warm)",
+  "--hub-ring": "var(--color-cyan)",
+  "--hub-radius": "0",
+} as CSSProperties;
+
 export default function JukeboxMoodBoard() {
   return (
-    <main className="theme-night min-h-screen bg-night font-plain text-warm">
+    <main style={hubTheme} className="theme-night min-h-screen bg-night font-plain text-warm">
       <div className="mx-auto max-w-[1440px] px-5 pb-16 pt-8 md:px-10 md:pt-12">
+        <HubLink className="mb-2" />
         <header>
           <p className={`${mono} text-warm`}>Mood board · 3 of 3</p>
           <h1 className="glow-text mt-4 break-words font-neon text-[15vw] font-black uppercase italic leading-[0.95] text-magenta md:text-8xl xl:text-[10rem]">

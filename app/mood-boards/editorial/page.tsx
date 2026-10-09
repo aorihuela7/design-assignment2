@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import HubLink from "../../hub-link";
 import { FlatRecord, Halftone, InkPrint, PaperGrain, RecordLabel, SleeveBlue, SleeveRed, SleeveSquares, SleeveStack } from "./art";
 
 export const metadata: Metadata = { title: "Editorial · Ink · Paper — Mood Board" };
@@ -252,10 +253,23 @@ const ARTIFACTS: Artifact[] = [
   },
 ];
 
+const hubTheme = {
+  "--hub-font": "var(--font-plain)",
+  "--hub-size": "11px",
+  "--hub-weight": "900",
+  "--hub-tracking": "0.2em",
+  "--hub-transform": "uppercase",
+  "--hub-fg": "color-mix(in srgb, var(--color-press) 72%, var(--color-paper))",
+  "--hub-fg-hover": "var(--color-press)",
+  "--hub-ring": "var(--color-press)",
+  "--hub-radius": "0",
+} as CSSProperties;
+
 export default function EditorialMoodBoard() {
   return (
-    <main className="min-h-screen bg-paper font-plain text-press">
+    <main style={hubTheme} className="min-h-screen bg-paper font-plain text-press">
       <div className="mx-auto max-w-[1440px] px-5 pb-16 pt-6 md:px-10">
+        <HubLink className="mb-1" />
         <header className="border-t-[10px] border-press pt-3 md:pt-4">
           <div className="flex items-baseline justify-between gap-4">
             <p className={label}>Mood board · 2 of 3</p>

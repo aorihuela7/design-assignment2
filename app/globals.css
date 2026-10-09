@@ -109,3 +109,39 @@ body {
   --text-calm-label: var(--calm-label-size);
   --text-calm-label--line-height: var(--calm-label-line);
 }
+
+/* "← Hub" link (app/hub-link.tsx). Every page sets the --hub-* variables from its own theme. */
+.hub-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: var(--hub-radius, 0);
+  color: var(--hub-fg);
+  font-family: var(--hub-font);
+  font-size: var(--hub-size);
+  font-weight: var(--hub-weight);
+  letter-spacing: var(--hub-tracking);
+  text-transform: var(--hub-transform);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 200ms ease-out;
+}
+.hub-link:hover {
+  color: var(--hub-fg-hover);
+}
+.hub-link:active {
+  color: var(--hub-fg-hover);
+  text-decoration-thickness: 2px;
+}
+.hub-link:focus-visible {
+  outline: 2px solid var(--hub-ring);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-link {
+    transition: none;
+  }
+}
