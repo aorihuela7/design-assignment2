@@ -53,7 +53,7 @@ export function Button({
       {...props}
       {...s}
       className={join(
-        "inline-flex min-h-11 items-center justify-center gap-calm-8 rounded-calm-12 px-calm-16 py-calm-8 text-calm-body font-medium st-disabled:cursor-not-allowed",
+        "inline-flex min-h-11 items-center justify-center gap-calm-8 whitespace-nowrap rounded-calm-12 px-calm-16 py-calm-8 text-calm-body font-medium st-disabled:cursor-not-allowed",
         BUTTON[variant],
         control,
         className,
@@ -122,7 +122,7 @@ export function Select({ state, children, ...props }: { state?: State; children:
 const BOX =
   "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg";
 
-export function Checkbox({ label, state, ...props }: { label: string; state?: State } & InputHTMLAttributes<HTMLInputElement>) {
+export function Checkbox({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
   return (
     <label className={join("inline-flex min-h-11 items-center gap-calm-12", state === "disabled" && "text-calm-muted")}>
@@ -138,12 +138,12 @@ export function Checkbox({ label, state, ...props }: { label: string; state?: St
           s.className,
         )}
       />
-      {label}
+      <span className={hideLabel ? "sr-only" : undefined}>{label}</span>
     </label>
   );
 }
 
-export function Radio({ label, state, ...props }: { label: string; state?: State } & InputHTMLAttributes<HTMLInputElement>) {
+export function Radio({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
   return (
     <label className={join("inline-flex min-h-11 items-center gap-calm-12", state === "disabled" && "text-calm-muted")}>
@@ -159,14 +159,14 @@ export function Radio({ label, state, ...props }: { label: string; state?: State
           s.className,
         )}
       />
-      {label}
+      <span className={hideLabel ? "sr-only" : undefined}>{label}</span>
     </label>
   );
 }
 
 /* Toggle */
 
-export function Toggle({ label, defaultOn = false, state }: { label: string; defaultOn?: boolean; state?: State }) {
+export function Toggle({ label, defaultOn = false, state, compact }: { label: string; defaultOn?: boolean; state?: State; compact?: boolean }) {
   const [on, setOn] = useState(defaultOn || state === "selected");
   const s = sample(state);
   const isOn = state ? state === "selected" : on;
@@ -191,9 +191,11 @@ export function Toggle({ label, defaultOn = false, state }: { label: string; def
           )}
         />
       </button>
-      <span className={state === "disabled" ? "text-calm-muted" : undefined}>
-        {label}: {isOn ? "On" : "Off"}
-      </span>
+      {!compact && (
+        <span className={state === "disabled" ? "text-calm-muted" : undefined}>
+          {label}: {isOn ? "On" : "Off"}
+        </span>
+      )}
     </span>
   );
 }
@@ -321,7 +323,7 @@ function CloseButton({ onClick }: { onClick: () => void }) {
 
 type RecordItem = (typeof records)[number];
 
-export function RecordRow({ record, selected, state, onSelect }: { record: RecordItem; selected?: boolean; state?: State; onSelect?: () => void }) {
+export function RecordRow({ record, selected, state, compact, onSelect }: { record: RecordItem; selected?: boolean; state?: State; compact?: boolean; onSelect?: () => void }) {
   const s = sample(state);
   const on = selected ?? state === "selected";
   return (
@@ -332,17 +334,17 @@ export function RecordRow({ record, selected, state, onSelect }: { record: Recor
       onClick={onSelect}
       {...s}
       className={join(
-        "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left st-hover:bg-calm-bg st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface",
+        compact ? "flex min-h-11 w-full items-center justify-between gap-calm-8 rounded-calm-6 border border-calm-border px-calm-12 py-calm-8 text-left st-hover:bg-calm-bg st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface" : "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left st-hover:bg-calm-bg st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface",
         control,
         s.className,
       )}
     >
       <span className="min-w-0">
-        <span className="block font-calm-serif text-calm-heading">{record.title}</span>
-        <span className={join("block", on ? "text-calm-border" : "text-calm-muted")}>{record.artist}</span>
+        <span className={join("block font-calm-serif", compact ? "text-calm-body" : "text-calm-heading")}>{record.title}</span>
+        {!compact && <span className={join("block", on ? "text-calm-border" : "text-calm-muted")}>{record.artist}</span>}
       </span>
       <span className="flex shrink-0 items-center gap-calm-12">
-        <span className={join("text-calm-label font-medium uppercase tracking-[0.18em]", on ? "text-calm-border" : "text-calm-muted")}>{record.year}</span>
+        {!compact && <span className={join("text-calm-label font-medium uppercase tracking-[0.18em]", on ? "text-calm-border" : "text-calm-muted")}>{record.year}</span>}
         {on ? (
           <span aria-hidden>✓</span>
         ) : (
