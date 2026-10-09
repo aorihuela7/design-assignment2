@@ -187,7 +187,7 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
       >
         <span
           className={join(
-            "absolute left-1 top-1 h-5 w-5 rounded-ds-12 bg-ds-muted transition-transform duration-(--ds-duration) ease-out motion-reduce:transition-none group-st-selected:translate-x-5 group-st-selected:bg-ds-text",
+            "absolute left-1 top-1 h-5 w-5 rounded-ds-12 bg-ds-muted transition-transform duration-(--ds-duration) ease-out motion-reduce:transition-none group-st-hover:bg-ds-text group-st-selected:translate-x-5 group-st-selected:bg-ds-text",
           )}
         />
       </button>
