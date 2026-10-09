@@ -27,7 +27,7 @@ const STATES: { name: string; title: string; body: string; icon: ReactNode; acti
     title: "Loading…",
     body: "Fetching your records.",
     icon: (
-      <svg viewBox="0 0 32 32" className={`${ICON} motion-safe:animate-spin`} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <svg viewBox="0 0 32 32" className={`${ICON} motion-safe:animate-spin`} fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
         <circle cx="16" cy="16" r="13" strokeOpacity="0.5" />
         <path d="M16 3a13 13 0 0 1 13 13" />
       </svg>
