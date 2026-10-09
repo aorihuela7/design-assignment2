@@ -74,7 +74,7 @@ export function TextLink({ state, children, href = "#" }: { state?: State; child
       tabIndex={static_ ? -1 : undefined}
       onClick={(e) => e.preventDefault()}
       className={join(
-        "inline-block rounded-calm-6 text-calm-text underline decoration-calm-muted underline-offset-4 st-hover:decoration-calm-text st-press:text-calm-muted",
+        "-mx-calm-4 inline-block rounded-calm-6 px-calm-4 text-calm-text underline decoration-calm-muted underline-offset-4 st-hover:bg-calm-bg st-hover:decoration-2 st-hover:decoration-calm-text st-press:bg-calm-border st-press:decoration-2 st-press:decoration-calm-text",
         control,
         static_ && "pointer-events-none",
       )}
