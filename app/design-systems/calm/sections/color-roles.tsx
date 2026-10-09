@@ -57,8 +57,8 @@ export default function ColorRoles() {
       <ul className="grid gap-calm-16 sm:grid-cols-2 lg:grid-cols-3">
         {ROLES.map((role) => (
           <li key={role.name} className="overflow-hidden rounded-calm-12 border border-calm-border bg-calm-surface">
-            <div className="h-20 border-b border-calm-border" style={{ background: role.hex }} aria-hidden />
-            <div className="p-calm-16">
+            <div className="m-calm-16 mb-0 h-20 rounded-calm-6 border border-calm-border" style={{ background: role.hex }} aria-hidden />
+            <div className="p-calm-16 pt-calm-12">
               <p className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{role.name}</p>
               <p className="mt-calm-4 font-calm-serif text-calm-heading">{role.hex}</p>
               <p className="mt-calm-8 text-calm-muted">{role.use}</p>
