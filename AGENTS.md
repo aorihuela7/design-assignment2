@@ -42,3 +42,10 @@ After UI changes, open the site in a browser (Playwright MCP or /chrome) at 390p
 
 ## More context
 Full class notes: docs/class-notes.md (read only when needed).
+
+## When in doubt
+- For design principles, vocabulary, and the class's rules (hierarchy, type roles, color roles, accent, contrast, alignment, spacing, responsive, affordances, states, mood boards, design systems, directing agents), consult docs/class-notes.md before deciding.
+- It is long, so don't read the whole file. Search its section headings and read only the relevant section.
+- For assignment requirements (what each page must contain, deliverables, tech stack), consult docs/assignment.md (or docs/assignment.pdf). If the two files conflict, the assignment wins.
+- The class notes use example content (a habit tracker, a pink accent, Calm/Arcade/Editorial). Apply the principles, not the example values. This project is a vinyl collection with Calm, Editorial, and Jukebox.
+- If the answer isn't in either file, ask me instead of guessing.
