@@ -23,7 +23,7 @@ export default function Components({ art, accentName }: { art: (size: number) =>
             <Button>Skip</Button>
             <TextLink>See all →</TextLink>
           </div>
-          <p className="mt-ds-16 text-ds-muted"><span className="capitalize">{accentName}</span> marks the primary action. Everything else stays quiet.</p>
+          <p className="mt-ds-16 text-ds-muted">{accentName.charAt(0).toUpperCase() + accentName.slice(1)} marks the primary action. Everything else stays quiet.</p>
         </Group>
 
         <Group title="Text input and select">
