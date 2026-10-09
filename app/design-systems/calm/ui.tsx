@@ -450,3 +450,22 @@ export function LogModal() {
     </>
   );
 }
+
+/* Motion demo: a button, so it works with mouse, touch, and keyboard. */
+
+export function MotionDemo({ duration }: { duration: string }) {
+  const [full, setFull] = useState(false);
+  return (
+    <div>
+      <div className="h-calm-12 w-full overflow-hidden rounded-calm-6 border border-calm-muted" aria-hidden>
+        <div
+          className="h-full bg-calm-text transition-[width] ease-out motion-reduce:transition-none"
+          style={{ width: full ? "100%" : "25%", transitionDuration: duration }}
+        />
+      </div>
+      <div className="mt-calm-16">
+        <Button onClick={() => setFull(!full)}>Play motion</Button>
+      </div>
+    </div>
+  );
+}

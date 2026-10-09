@@ -1,5 +1,6 @@
 import { motion, radii, spacing } from "../tokens";
 import Section from "../section";
+import { MotionDemo } from "../ui";
 
 const label = "text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted";
 
@@ -53,9 +54,9 @@ export default function SpacingShape() {
           <p className="mt-calm-16 font-calm-serif text-calm-heading">
             {motion.duration}, {motion.easing}
           </p>
-          <p className="mt-calm-8 text-calm-muted">No bounce, no overshoot. Hover the bar to see it.</p>
-          <div className="group mt-calm-16 h-calm-12 w-full overflow-hidden rounded-calm-6 border border-calm-muted">
-            <div className="h-full w-1/4 bg-calm-text transition-[width] duration-200 ease-out group-hover:w-full motion-reduce:transition-none" />
+          <p className="mt-calm-8 text-calm-muted">No bounce, no overshoot. Press the button to play it.</p>
+          <div className="mt-calm-16">
+            <MotionDemo duration={motion.duration} />
           </div>
         </div>
       </div>
