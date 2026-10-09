@@ -36,7 +36,7 @@ const BUTTON = {
   primary:
     "bg-calm-accent text-calm-surface st-hover:bg-calm-accent-hover st-press:bg-calm-accent-pressed st-selected:bg-calm-accent-hover st-disabled:bg-calm-border st-disabled:text-calm-muted",
   secondary:
-    "border border-calm-muted bg-calm-surface text-calm-text st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-selected:text-calm-surface st-disabled:border-calm-border st-disabled:bg-calm-surface st-disabled:text-calm-muted",
+    "border border-calm-muted bg-calm-surface text-calm-text st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-disabled:border-calm-border st-disabled:bg-calm-surface st-disabled:text-calm-muted",
 } as const;
 
 export function Button({
@@ -121,7 +121,7 @@ export function Select({ state, children, ...props }: { state?: State; children:
 /* Checkbox and radio */
 
 const BOX =
-  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-90 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg";
+  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-90 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg";
 
 export function Checkbox({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
@@ -134,7 +134,7 @@ export function Checkbox({ label, state, hideLabel, ...props }: { label: string;
         {...s}
         className={join(
           BOX,
-          "rounded-calm-6 before:text-[13px] before:leading-none before:text-calm-surface before:opacity-0 before:content-['✓'] st-selected:before:opacity-100",
+          "rounded-calm-6 before:text-[13px] before:leading-none before:text-calm-text before:opacity-0 before:content-['✓'] st-selected:before:opacity-100",
           control,
           s.className,
         )}
@@ -155,7 +155,7 @@ export function Radio({ label, state, hideLabel, ...props }: { label: string; st
         {...s}
         className={join(
           BOX,
-          "rounded-calm-12 before:h-2 before:w-2 before:rounded-calm-12 before:bg-calm-surface before:opacity-0 before:content-[''] st-selected:before:opacity-100",
+          "rounded-calm-12 before:h-2 before:w-2 before:rounded-calm-12 before:bg-calm-text before:opacity-0 before:content-[''] st-selected:before:opacity-100",
           control,
           s.className,
         )}
@@ -181,14 +181,14 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
         onClick={() => setOn(!on)}
         {...s}
         className={join(
-          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg",
+          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg",
           control,
           s.className,
         )}
       >
         <span
           className={join(
-            "absolute left-1 top-1 h-5 w-5 rounded-calm-12 bg-calm-muted transition-transform duration-200 ease-out motion-reduce:transition-none group-st-selected:translate-x-5 group-st-selected:bg-calm-surface",
+            "absolute left-1 top-1 h-5 w-5 rounded-calm-12 bg-calm-muted transition-transform duration-200 ease-out motion-reduce:transition-none group-st-selected:translate-x-5 group-st-selected:bg-calm-text",
           )}
         />
       </button>
@@ -264,7 +264,7 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
 /* Filter chips */
 
 const CHIP =
-  "inline-flex min-h-9 items-center gap-calm-4 rounded-calm-12 border border-calm-muted bg-calm-surface px-calm-12 py-calm-4 text-calm-body st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-selected:text-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:text-calm-muted";
+  "inline-flex min-h-9 items-center gap-calm-4 rounded-calm-12 border border-calm-muted bg-calm-surface px-calm-12 py-calm-4 text-calm-body st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-selected:font-medium st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:text-calm-muted";
 
 export function Chip({ selected, state, children, ...props }: { selected?: boolean; state?: State; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const s = sample(state);
@@ -335,17 +335,17 @@ export function RecordRow({ record, selected, state, compact, onSelect }: { reco
       onClick={onSelect}
       {...s}
       className={join(
-        compact ? "flex min-h-11 w-full items-center justify-between gap-calm-8 rounded-calm-6 border border-calm-border px-calm-12 py-calm-8 text-left st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface" : "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface",
+        compact ? "flex min-h-11 w-full items-center justify-between gap-calm-8 rounded-calm-6 border border-calm-border px-calm-12 py-calm-8 text-left st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg" : "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left border-l-2 border-transparent st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg",
         control,
         s.className,
       )}
     >
       <span className="min-w-0">
         <span className={join("block font-calm-serif", compact ? "text-calm-body" : "text-xl")}>{record.title}</span>
-        {!compact && <span className={join("block", on ? "text-calm-border" : "text-calm-muted")}>{record.artist}</span>}
+        {!compact && <span className="block text-calm-muted">{record.artist}</span>}
       </span>
       <span className="flex shrink-0 items-center gap-calm-12">
-        {!compact && <span className={join("text-calm-label font-medium uppercase tracking-[0.18em]", on ? "text-calm-border" : "text-calm-muted")}>{record.year}</span>}
+        {!compact && <span className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{record.year}</span>}
         {on ? (
           <span aria-hidden>✓</span>
         ) : (
