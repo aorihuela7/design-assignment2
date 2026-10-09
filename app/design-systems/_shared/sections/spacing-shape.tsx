@@ -14,7 +14,7 @@ export default function SpacingShape({ theme }: { theme: DsTheme }) {
           <ul className="mt-ds-16 space-y-ds-12">
             {theme.spacing.map((s) => (
               <li key={s} className="flex items-center gap-ds-16">
-                <span className="w-12 ds-head">{s}px</span>
+                <span className="w-12 ds-head">{s}<span className="normal-case">px</span></span>
                 <span className="h-ds-8 bg-ds-text" style={{ width: s * 4 }} aria-hidden />
               </li>
             ))}
@@ -26,9 +26,9 @@ export default function SpacingShape({ theme }: { theme: DsTheme }) {
           <p className={label}>Corners</p>
           <ul className="mt-ds-16 flex gap-ds-16">
             {theme.radii.map((r) => (
-              <li key={r.px} className="flex-1">
+              <li key={r.px} className={theme.radii.length > 1 ? "flex-1" : "w-40"}>
                 <div className="h-16 border border-ds-ctl bg-ds-bg" style={{ borderRadius: r.px }} aria-hidden />
-                <p className="mt-ds-8 ds-head">{r.px}px</p>
+                <p className="mt-ds-8 ds-head">{r.px}<span className="normal-case">px</span></p>
                 <p className="text-ds-muted">{r.use}</p>
               </li>
             ))}
@@ -40,7 +40,7 @@ export default function SpacingShape({ theme }: { theme: DsTheme }) {
           <div className="mt-ds-16 flex flex-wrap gap-ds-16">
             {theme.borders.map((b) => (
               <div key={b.title} className={`min-w-[140px] flex-1 rounded-ds-12 bg-ds-surface p-ds-16 ${b.cls}`}>
-                <p className="ds-head text-ds-heading">{b.w}</p>
+                <p className="ds-head text-ds-heading">{b.w.replace("px", "")}<span className="normal-case">px</span></p>
                 <p className="mt-ds-4 text-ds-text">{b.title}</p>
                 <p className="text-ds-muted">{b.desc}</p>
               </div>
