@@ -4,6 +4,7 @@ import ColorRoles from "./sections/color-roles";
 import ControlStates from "./sections/control-states";
 import Components from "./sections/components";
 import SpacingShape from "./sections/spacing-shape";
+import UiStates from "./sections/ui-states";
 import TypeRoles from "./sections/type-roles";
 import { themeVars } from "./tokens";
 
@@ -30,6 +31,7 @@ export default function CalmDesignSystem() {
         <SpacingShape />
         <Components />
         <ControlStates />
+        <UiStates />
       </main>
     </div>
   );
