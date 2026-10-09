@@ -41,9 +41,16 @@ body {
   font-family: var(--font-sans);
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-ink);
-  outline-offset: 2px;
+/* Default focus ring. In the base layer so Tailwind utilities (like the design systems' rings) can
+   override it; inside a design system it uses that theme's Text color. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+  [data-theme] :focus-visible {
+    outline-color: var(--ds-text);
+  }
 }
 
 /* Jukebox: cut corners (top-left, bottom-right) drawn as an outer clip plus an inset clip. */
