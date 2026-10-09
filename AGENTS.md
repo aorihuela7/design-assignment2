@@ -10,6 +10,11 @@ A static Next.js (App Router, TypeScript) + Tailwind site on Vercel. The homepag
 - Fully static: no database, accounts, external APIs, or data storage. Interactions are faked in the browser; nothing is saved.
 - Do not add packages I haven't asked for. Push back on backends or extra libraries.
 - Small, frequent commits with clear messages.
+- Commit after every meaningful change, once it works (e.g. one page, one component, one fix, one style adjustment). Never batch several unrelated changes into one commit.
+- Before each commit, run git status and stage only the files related to that change.
+- Write short, specific messages in the imperative (e.g. "Add Calm mood board grid", "Fix focus ring on Log button", "Make Moss swatch larger"). No vague messages like "update" or "changes".
+- Do not commit docs/assignment.pdf or docs/class-notes.md.
+- Do not push unless I ask. I will push when I finish a work block.
 - Remove anything extra. If a word or image doesn't help, cut it.
 - Never use localStorage or any persistence.
 
