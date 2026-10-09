@@ -203,7 +203,7 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
 /* Tabs */
 
 const TAB =
-  "relative min-h-11 overflow-hidden px-ds-12 py-ds-8 text-ds-body text-ds-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:text-ds-text st-press:scale-95 st-press:bg-ds-border st-selected:font-medium st-selected:after:bg-ds-text st-selected:text-ds-text st-disabled:cursor-not-allowed st-disabled:text-ds-muted st-disabled:opacity-50";
+  "relative min-h-11 overflow-hidden px-ds-12 py-ds-8 text-ds-body text-ds-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:bg-ds-bg st-hover:text-ds-text st-press:scale-95 st-press:bg-ds-border st-selected:font-medium st-selected:after:bg-ds-text st-selected:text-ds-text st-disabled:cursor-not-allowed st-disabled:text-ds-muted st-disabled:opacity-50";
 
 export function Tab({ state, children }: { state?: State; children: ReactNode }) {
   const s = sample(state);
