@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ColorRoles from "../_shared/sections/color-roles";
 import Components from "../_shared/sections/components";
+import ControlStates from "../_shared/sections/control-states";
 import SpacingShape from "../_shared/sections/spacing-shape";
 import TypeRoles from "../_shared/sections/type-roles";
 import DsShell from "../_shared/shell";
@@ -16,6 +17,7 @@ export default function JukeboxDesignSystem() {
       <TypeRoles theme={jukebox} />
       <SpacingShape theme={jukebox} />
       <Components accentName={jukebox.accentName} primaryLabel={jukebox.primary?.label} art={(size) => <JbRecord size={size} />} />
+      <ControlStates primaryLabel={jukebox.primary?.label} />
     </DsShell>
   );
 }
