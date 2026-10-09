@@ -33,7 +33,7 @@ function join(...parts: (string | undefined | false)[]) {
 
 const BUTTON = {
   primary:
-    "border-(length:--ds-primary-bw) border-ds-accent bg-ds-primary-bg text-ds-primary-fg st-hover:bg-ds-primary-hover st-hover:shadow-(--ds-primary-glow) st-press:bg-ds-primary-pressed st-selected:bg-ds-primary-selected st-selected:text-ds-primary-selected-fg st-disabled:border-ds-border st-disabled:bg-ds-border st-disabled:text-ds-muted st-disabled:shadow-none",
+    "font-(family-name:--ds-primary-font) [font-style:var(--ds-primary-style)] [text-transform:var(--ds-primary-transform)] border-(length:--ds-primary-bw) border-ds-accent bg-ds-primary-bg text-ds-primary-fg st-hover:bg-ds-primary-hover st-hover:shadow-(--ds-primary-glow) st-press:bg-ds-primary-pressed st-selected:bg-ds-primary-selected st-selected:text-ds-primary-selected-fg st-disabled:border-ds-border st-disabled:bg-ds-border st-disabled:text-ds-muted st-disabled:shadow-none",
   secondary:
     "border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface text-ds-text st-hover:bg-ds-bg st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg st-disabled:border-ds-border st-disabled:bg-ds-surface st-disabled:text-ds-muted",
 } as const;

@@ -14,13 +14,13 @@ const NAMES: Record<State, string> = {
   disabled: "Disabled",
 };
 
-const ROWS: { name: string; states: State[]; render: (s: State) => ReactNode }[] = [
+const rows = (primaryLabel: string): { name: string; states: State[]; render: (s: State) => ReactNode }[] => [
   {
     name: "Primary button",
     states: ALL,
     render: (s) => (
       <Button variant="primary" state={s}>
-        {s === "selected" ? "✓ Logged" : "Log"}
+        {s === "selected" ? "✓ Logged" : primaryLabel}
       </Button>
     ),
   },
@@ -56,7 +56,7 @@ const ROWS: { name: string; states: State[]; render: (s: State) => ReactNode }[]
 
 const label = "text-ds-label ds-label text-ds-muted";
 
-export default function ControlStates() {
+export default function ControlStates({ primaryLabel = "Log" }: { primaryLabel?: string }) {
   return (
     <Section n={5} title="Control states">
       <p className="max-w-xl text-ds-muted">
@@ -77,7 +77,7 @@ export default function ControlStates() {
             </tr>
           </thead>
           <tbody className="block md:table-row-group">
-            {ROWS.map((row) => (
+            {rows(primaryLabel).map((row) => (
               <tr key={row.name} className="grid grid-cols-2 gap-x-ds-16 gap-y-ds-12 border-t border-ds-border p-ds-16 first:border-t-0 md:table-row md:p-0">
                 <th scope="row" className={`${label} col-span-2 text-left md:table-cell md:w-40 md:p-ds-16 md:align-middle`}>
                   {row.name}

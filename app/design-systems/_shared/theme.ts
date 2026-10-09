@@ -53,6 +53,10 @@ export type DsTheme = {
     selectedFg: string;
     borderWidth: string;
     hoverGlow: string;
+    /** Label of the primary button in the samples, e.g. "Log +1". */
+    label: string;
+    /** Set the primary button in the head face (italic capitals, etc.). */
+    headType: boolean;
   };
   /** Palette colors that are never text or the primary action. */
   decorative?: { name: string; hex: string }[];
@@ -143,6 +147,8 @@ export function themeVars(t: DsTheme): Record<string, string> {
     selectedFg: p.onAccent,
     borderWidth: "0px",
     hoverGlow: "none",
+    label: "Log",
+    headType: false,
   };
   const vars: Record<string, string> = {
     "--ds-primary-bg": primary.bg,
@@ -153,6 +159,9 @@ export function themeVars(t: DsTheme): Record<string, string> {
     "--ds-primary-selected-fg": primary.selectedFg,
     "--ds-primary-bw": primary.borderWidth,
     "--ds-primary-glow": primary.hoverGlow,
+    "--ds-primary-font": primary.headType ? "var(--ds-font-head)" : "var(--ds-font-body)",
+    "--ds-primary-style": primary.headType ? "var(--ds-head-style)" : "normal",
+    "--ds-primary-transform": primary.headType ? "uppercase" : "none",
     "--ds-font-label": t.fonts.label ?? t.fonts.body,
     "--ds-head-style": t.fonts.headStyle ?? "normal",
     "--ds-display-glow": t.displayGlow ?? "none",

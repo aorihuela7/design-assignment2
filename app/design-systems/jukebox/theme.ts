@@ -55,6 +55,8 @@ export const jukebox: DsTheme = {
     selectedFg: night,
     borderWidth: "2px",
     hoverGlow: "0 0 10px rgb(255 46 147 / 0.75), 0 0 24px rgb(255 46 147 / 0.4)",
+    label: "Log +1",
+    headType: true,
   },
   backdrop: "rgb(0 0 0 / 0.7)",
   type: {

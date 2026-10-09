@@ -12,14 +12,14 @@ function Group({ title, children, wide, top }: { title: string; children: ReactN
   );
 }
 
-export default function Components({ art, accentName }: { art: (size: number) => ReactNode; accentName: string }) {
+export default function Components({ art, accentName, primaryLabel = "Log" }: { art: (size: number) => ReactNode; accentName: string; primaryLabel?: string }) {
   const featured = records[0];
   return (
     <Section n={4} title="Components">
       <div className="grid gap-ds-24 md:grid-cols-2">
         <Group title="Buttons and link">
           <div className="flex flex-wrap items-center gap-ds-16">
-            <Button variant="primary">Log</Button>
+            <Button variant="primary">{primaryLabel}</Button>
             <Button>Skip</Button>
             <TextLink>See all →</TextLink>
           </div>
