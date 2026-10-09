@@ -155,8 +155,8 @@ const ARTIFACTS: Artifact[] = [
     ref: "A small, selectable genre tag.",
     node: (
       <div className="flex flex-wrap gap-2">
-        <span className={`${chip} border-ink bg-ink text-surface`}>✓ Jazz</span>
-        <span className={chip}>Folk</span>
+        <span className={`${chip} border-ink bg-ink text-surface`}>✓ Rock</span>
+        <span className={chip}>Pop</span>
       </div>
     ),
   },
