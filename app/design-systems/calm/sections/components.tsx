@@ -4,9 +4,9 @@ import { records } from "../records";
 import Section from "../section";
 import { Badge, Button, Checkbox, ChipGroup, Field, LogModal, Radio, RecordList, Select, Tabs, TextInput, TextLink, Toggle } from "../ui";
 
-function Group({ title, children, wide }: { title: string; children: ReactNode; wide?: boolean }) {
+function Group({ title, children, wide, top }: { title: string; children: ReactNode; wide?: boolean; top?: boolean }) {
   return (
-    <div className={`rounded-calm-12 border border-calm-border bg-calm-surface p-calm-16 md:p-calm-24 ${wide ? "md:col-span-2" : ""}`}>
+    <div className={`rounded-calm-12 border border-calm-border bg-calm-surface p-calm-16 md:p-calm-24 ${wide ? "md:col-span-2" : ""} ${top ? "self-start" : ""}`}>
       <h3 className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{title}</h3>
       <div className="mt-calm-16">{children}</div>
     </div>
@@ -71,7 +71,7 @@ export default function Components() {
           </div>
         </Group>
 
-        <Group title="Card and badge">
+        <Group title="Card and badge" top>
           <p className="mb-calm-16 text-calm-muted">A card only shows a record. It is not a button, so it has no arrow and no hover.</p>
           <article className="flex gap-calm-16 rounded-calm-12 border border-calm-border bg-calm-bg p-calm-16">
             <Record size={80} />
