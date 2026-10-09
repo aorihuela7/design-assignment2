@@ -26,9 +26,9 @@ export function contrast(a: string, b: string) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-/** Truncated, never rounded up, so "4.5:1" is only shown when it truly passes. */
+/** Rounded to one decimal. The pass/fail grade always uses the unrounded ratio. */
 export function formatRatio(ratio: number) {
-  return `${(Math.floor(ratio * 10) / 10).toFixed(1)}:1`;
+  return `${ratio.toFixed(1)}:1`;
 }
 
 export function grade(ratio: number): "AAA" | "AA" | "Large text and UI only" | "Fail" {
