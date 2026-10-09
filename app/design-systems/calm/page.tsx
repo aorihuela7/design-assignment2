@@ -17,7 +17,7 @@ export default function CalmDesignSystem() {
       <ColorRoles theme={calm} />
       <TypeRoles theme={calm} />
       <SpacingShape theme={calm} />
-      <Components art={(size) => <Record size={size} />} />
+      <Components accentName={calm.accentName} art={(size) => <Record size={size} />} />
       <ControlStates />
       <UiStates />
     </DsShell>

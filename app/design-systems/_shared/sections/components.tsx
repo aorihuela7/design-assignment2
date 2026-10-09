@@ -12,7 +12,7 @@ function Group({ title, children, wide, top }: { title: string; children: ReactN
   );
 }
 
-export default function Components({ art }: { art: (size: number) => ReactNode }) {
+export default function Components({ art, accentName }: { art: (size: number) => ReactNode; accentName: string }) {
   const featured = records[0];
   return (
     <Section n={4} title="Components">
@@ -23,7 +23,7 @@ export default function Components({ art }: { art: (size: number) => ReactNode }
             <Button>Skip</Button>
             <TextLink>See all →</TextLink>
           </div>
-          <p className="mt-ds-16 text-ds-muted">Moss marks the primary action. Everything else stays quiet.</p>
+          <p className="mt-ds-16 text-ds-muted"><span className="capitalize">{accentName}</span> marks the primary action. Everything else stays quiet.</p>
         </Group>
 
         <Group title="Text input and select">

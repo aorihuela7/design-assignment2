@@ -154,7 +154,7 @@ export function Radio({ label, state, hideLabel, ...props }: { label: string; st
         {...s}
         className={join(
           BOX,
-          "rounded-ds-12 before:h-2 before:w-2 before:rounded-ds-12 before:bg-ds-text before:opacity-0 before:content-[''] st-selected:before:opacity-100",
+          "rounded-full before:h-2 before:w-2 before:rounded-full before:bg-ds-text before:opacity-0 before:content-[''] st-selected:before:opacity-100",
           control,
           s.className,
         )}
