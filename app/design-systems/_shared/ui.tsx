@@ -120,7 +120,7 @@ export function Select({ state, children, ...props }: { state?: State; children:
 /* Checkbox and radio */
 
 const BOX =
-  "grid h-5 w-5 shrink-0 appearance-none place-content-center border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface st-hover:bg-ds-bg st-press:scale-90 st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-surface st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:bg-ds-surface";
+  "grid h-5 w-5 shrink-0 appearance-none place-content-center border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface st-hover:border-ds-text st-hover:bg-ds-bg st-press:scale-90 st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-surface st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:bg-ds-surface";
 
 export function Checkbox({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
