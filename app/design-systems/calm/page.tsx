@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ColorRoles from "./sections/color-roles";
+import TypeRoles from "./sections/type-roles";
 import { themeVars } from "./tokens";
 
 export const metadata: Metadata = { title: "Calm · Design System" };
@@ -22,6 +23,7 @@ export default function CalmDesignSystem() {
         </header>
 
         <ColorRoles />
+        <TypeRoles />
       </main>
     </div>
   );
