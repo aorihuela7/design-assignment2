@@ -49,7 +49,7 @@ const ARTIFACTS: Artifact[] = [
   swatch("Paper cream", "#F2EAD3", "Newsprint-warm stock, the page under everything.", "bg-paper", false, 3),
   swatch("Ink black", "#111111", "Heavy press black, for rules and headlines.", "bg-press", true, 2),
   swatch("Red-orange", "#E4472B", "One loud flat spot colour, kept for the LOG action.", "bg-signal", false, 3),
-  swatch("Deep blue", "#1E3A6B", "The second ink on a late-night sleeve.", "bg-navy", true, 2),
+  swatch("Deep blue", "#1E3A6B", "The second ink on a neon-night sleeve.", "bg-navy", true, 2),
   {
     name: "Number",
     base: 1,
@@ -69,7 +69,7 @@ const ARTIFACTS: Artifact[] = [
     md: 6,
     xl: 9,
     ref: "A headline set to fill the sleeve edge to edge.",
-    node: <p className="font-display text-[26vw] uppercase leading-[0.82] md:text-[10rem] xl:text-[14rem]">Blue<br />Hour</p>,
+    node: <p className="font-display text-[26vw] uppercase leading-[0.82] md:text-[10rem] xl:text-[14rem]">Night<br />Drive</p>,
   },
   {
     name: "Label type",
@@ -77,7 +77,7 @@ const ARTIFACTS: Artifact[] = [
     md: 3,
     xl: 3,
     ref: "The tiny print on the back, set in capitals.",
-    node: <p className="text-[10px] font-bold uppercase leading-relaxed tracking-[0.25em]">Side A · Stereo · 33⅓ RPM · Recorded live</p>,
+    node: <p className="text-[10px] font-bold uppercase leading-relaxed tracking-[0.25em]">Side A · Stereo · Digital recording · 33⅓ RPM</p>,
   },
   {
     name: "Headline face",
@@ -100,7 +100,7 @@ const ARTIFACTS: Artifact[] = [
     ref: "Liner notes, plain and small, in Helvetica Neue.",
     node: (
       <p className="max-w-prose text-sm leading-relaxed">
-        Recorded in one night, pressed in a week. Six players, no overdubs, a room full of smoke and a single microphone hung over the drums.
+        Drum machines, a borrowed synth and one guitar turned all the way up. Written in a week, mixed in a weekend, played loud on a car stereo.
       </p>
     ),
   },
@@ -109,24 +109,24 @@ const ARTIFACTS: Artifact[] = [
     base: 2,
     md: 3,
     xl: 4,
-    ref: "A gig poster: tiny label, huge headline, hard black.",
+    ref: "A tour poster: tiny label, huge headline, hard black.",
     bg: "bg-press text-paper",
     node: (
       <div className="w-full">
-        <p className={`${label} text-signal`}>Live · One night</p>
-        <p className="mt-2 font-display text-6xl uppercase leading-[0.85]">At the<br />Blue Room</p>
+        <p className={`${label} text-signal`}>World tour · 1986</p>
+        <p className="mt-2 font-display text-6xl uppercase leading-[0.85]">Night<br />Drive Live</p>
       </div>
     ),
   },
   { name: "Sleeve · Red", base: 1, md: 3, xl: 4, ref: "A circle against a flat field, cropped hard.", bare: true, node: <SleeveRed /> },
-  { name: "Sleeve · Column", base: 1, md: 3, xl: 3, ref: "A split page: one colour column, one half disc.", bare: true, node: <SleeveBlue /> },
-  { name: "Sleeve · Squares", base: 1, md: 3, xl: 3, ref: "Nested squares, the way a cover stacks print runs.", bare: true, node: <SleeveSquares /> },
+  { name: "Sleeve · Sunset", base: 1, md: 3, xl: 3, ref: "A sun sliced by stripes, the decade in one shape.", bare: true, node: <SleeveBlue /> },
+  { name: "Sleeve · Zigzag", base: 1, md: 3, xl: 3, ref: "Flat triangles and a hard zigzag, no gradients.", bare: true, node: <SleeveSquares /> },
   { name: "Record label", base: 1, md: 3, xl: 2, ref: "A two-colour centre label, split flat.", node: <RecordLabel /> },
   { name: "Paper grain", base: 2, md: 3, xl: 3, ref: "Uncoated stock with fibres showing.", bare: true, node: <PaperGrain /> },
   { name: "Halftone dots", base: 2, md: 3, xl: 5, ref: "Dots growing across the page, as printed.", bare: true, node: <Halftone /> },
   { name: "Ink print", base: 2, md: 3, xl: 4, ref: "Solid black, one plate off register.", bare: true, node: <InkPrint /> },
   { name: "Record", base: 2, md: 3, xl: 3, ref: "A black disc, flattened to a few shapes.", node: <FlatRecord /> },
-  { name: "Stack of sleeves", base: 2, md: 6, xl: 9, ref: "A pile of sleeves, spines out, waiting to be played.", node: <SleeveStack /> },
+  { name: "Stack of sleeves", base: 2, md: 6, xl: 9, ref: "A pile of sleeves, spines out, waiting for the next side.", node: <SleeveStack /> },
   {
     name: "LOG button",
     base: 2,
@@ -147,8 +147,8 @@ const ARTIFACTS: Artifact[] = [
     ref: "A tag in a bordered box; selected goes solid.",
     node: (
       <div className="flex flex-wrap gap-2">
-        <span className="border-[3px] border-press bg-press px-3 py-1 text-xs font-black uppercase tracking-widest text-paper">✓ Jazz</span>
-        <span className="border-[3px] border-press px-3 py-1 text-xs font-black uppercase tracking-widest">Blues</span>
+        <span className="border-[3px] border-press bg-press px-3 py-1 text-xs font-black uppercase tracking-widest text-paper">✓ Rock</span>
+        <span className="border-[3px] border-press px-3 py-1 text-xs font-black uppercase tracking-widest">Pop</span>
       </div>
     ),
   },
@@ -187,9 +187,9 @@ const ARTIFACTS: Artifact[] = [
           <FlatRecord />
         </div>
         <div className="p-3">
-          <p className={label}>LP · 1964</p>
-          <p className="mt-1 font-display text-3xl uppercase leading-none">Blue Hour</p>
-          <p className="mt-2 text-xs uppercase tracking-widest">Mara Voss Quintet</p>
+          <p className={label}>LP · 1985</p>
+          <p className="mt-1 font-display text-3xl uppercase leading-none">Night Drive</p>
+          <p className="mt-2 text-xs uppercase tracking-widest">The Night Drivers</p>
         </div>
       </div>
     ),
@@ -203,8 +203,8 @@ const ARTIFACTS: Artifact[] = [
     node: (
       <ul className="w-full max-w-sm border-[3px] border-press">
         {[
-          ["1", "Low Lamp", "3:42"],
-          ["2", "Slow Tea", "4:10"],
+          ["1", "Night Drive", "3:42"],
+          ["2", "Heat Wave", "4:10"],
         ].map(([n, t, d]) => (
           <li key={n} className="flex items-baseline gap-3 border-b-[3px] border-press px-3 py-2 last:border-b-0">
             <span className="font-display text-2xl">{n}</span>
@@ -265,7 +265,7 @@ export default function EditorialMoodBoard() {
             Editorial · Ink · Paper
           </h1>
           <p className="mt-4 max-w-md border-l-[10px] border-signal pl-4 text-sm font-bold uppercase leading-snug tracking-widest md:ml-auto md:mr-0">
-            A 1960s jazz record sleeve: bold, confident, printed.
+            A 1980s rock and pop record sleeve: loud, graphic, printed.
           </p>
         </header>
 

@@ -6,11 +6,11 @@ const PLAIN = "'Helvetica Neue', Arial, sans-serif";
 
 export function SleeveRed() {
   return (
-    <svg viewBox="0 0 160 160" className="w-full" role="img" aria-label="Original sleeve: red field, black circle, BLUE HOUR in cream">
+    <svg viewBox="0 0 160 160" className="w-full" role="img" aria-label="Original sleeve: red field, black circle, NIGHT DRIVE in cream">
       <rect width="160" height="160" fill={E.red} />
       <circle cx="40" cy="150" r="96" fill={E.ink} />
-      <text x="12" y="64" fontFamily={DISPLAY} fontSize="56" fill={E.paper}>BLUE</text>
-      <text x="12" y="116" fontFamily={DISPLAY} fontSize="56" fill={E.paper}>HOUR</text>
+      <text x="12" y="64" fontFamily={DISPLAY} fontSize="52" fill={E.paper}>NIGHT</text>
+      <text x="12" y="116" fontFamily={DISPLAY} fontSize="52" fill={E.paper}>DRIVE</text>
       <text x="148" y="16" textAnchor="end" fontFamily={PLAIN} fontWeight="700" fontSize="7" letterSpacing="1.5" fill={E.ink}>STEREO</text>
       <rect x="1.5" y="1.5" width="157" height="157" fill="none" stroke={E.ink} strokeWidth="3" />
     </svg>
@@ -19,14 +19,13 @@ export function SleeveRed() {
 
 export function SleeveBlue() {
   return (
-    <svg viewBox="0 0 160 160" className="w-full" role="img" aria-label="Original sleeve: blue column, red half circle, NIGHT SHIFT">
-      <rect width="160" height="160" fill={E.paper} />
-      <rect width="56" height="160" fill={E.blue} />
-      <path d="M56 36 A44 44 0 0 1 56 124 Z" fill={E.red} />
-      <rect x="76" y="14" width="70" height="10" fill={E.ink} />
-      <rect x="76" y="30" width="46" height="10" fill={E.ink} />
-      <text x="70" y="132" fontFamily={DISPLAY} fontSize="32" fill={E.ink}>NIGHT</text>
-      <text x="70" y="154" fontFamily={DISPLAY} fontSize="24" fill={E.ink}>SHIFT</text>
+    <svg viewBox="0 0 160 160" className="w-full" role="img" aria-label="Original sleeve: red sun cut by stripes on blue, AFTER HOURS">
+      <rect width="160" height="160" fill={E.blue} />
+      <circle cx="80" cy="70" r="46" fill={E.red} />
+      <rect x="30" y="78" width="100" height="4" fill={E.blue} />
+      <rect x="30" y="90" width="100" height="6" fill={E.blue} />
+      <rect x="30" y="104" width="100" height="8" fill={E.blue} />
+      <text x="80" y="148" textAnchor="middle" fontFamily={DISPLAY} fontSize="26" fill={E.paper}>AFTER HOURS</text>
       <rect x="1.5" y="1.5" width="157" height="157" fill="none" stroke={E.ink} strokeWidth="3" />
     </svg>
   );
@@ -34,12 +33,12 @@ export function SleeveBlue() {
 
 export function SleeveSquares() {
   return (
-    <svg viewBox="0 0 160 160" className="w-full" role="img" aria-label="Original sleeve: nested squares, SQUARE ROOT">
-      <rect width="160" height="160" fill={E.blue} />
-      <rect x="20" y="16" width="120" height="120" fill={E.paper} />
-      <rect x="40" y="36" width="80" height="80" fill={E.red} />
-      <rect x="60" y="56" width="40" height="40" fill={E.ink} />
-      <text x="80" y="152" textAnchor="middle" fontFamily={PLAIN} fontWeight="700" fontSize="8" letterSpacing="3" fill={E.paper}>SQUARE ROOT</text>
+    <svg viewBox="0 0 160 160" className="w-full" role="img" aria-label="Original sleeve: triangles and a zigzag, HEAT WAVE">
+      <rect width="160" height="160" fill={E.paper} />
+      <polygon points="16,16 84,16 16,84" fill={E.red} />
+      <polygon points="144,128 84,128 144,68" fill={E.blue} />
+      <polyline points="16,104 44,76 72,104 100,76 128,104 148,84" fill="none" stroke={E.ink} strokeWidth="7" strokeLinejoin="miter" />
+      <text x="14" y="153" fontFamily={DISPLAY} fontSize="26" fill={E.ink}>HEAT WAVE</text>
       <rect x="1.5" y="1.5" width="157" height="157" fill="none" stroke={E.ink} strokeWidth="3" />
     </svg>
   );
@@ -64,7 +63,7 @@ export function RecordLabel() {
       <path d="M4 70 A66 66 0 0 1 136 70 Z" fill={E.red} />
       <line x1="4" y1="70" x2="136" y2="70" stroke={E.ink} strokeWidth="4" />
       <text x="70" y="34" textAnchor="middle" fontFamily={PLAIN} fontWeight="700" fontSize="8" letterSpacing="2.5" fill={E.ink}>SIDE A</text>
-      <text x="70" y="60" textAnchor="middle" fontFamily={DISPLAY} fontSize="24" fill={E.ink}>BLUE HOUR</text>
+      <text x="70" y="60" textAnchor="middle" fontFamily={DISPLAY} fontSize="24" fill={E.ink}>NIGHT DRIVE</text>
       <text x="70" y="98" textAnchor="middle" fontFamily={DISPLAY} fontSize="20" fill={E.ink}>33⅓ RPM</text>
       <text x="70" y="118" textAnchor="middle" fontFamily={PLAIN} fontWeight="700" fontSize="7" letterSpacing="2.5" fill={E.ink}>STEREO</text>
       <circle cx="70" cy="70" r="3.5" fill={E.ink} />
@@ -74,12 +73,12 @@ export function RecordLabel() {
 
 export function SleeveStack() {
   const rows = [
-    { c: E.red, t: E.ink, x: 10, w: 270, label: "BLUE HOUR" },
-    { c: E.paper, t: E.ink, x: 0, w: 280, label: "NIGHT SHIFT" },
-    { c: E.blue, t: E.paper, x: 22, w: 262, label: "SQUARE ROOT" },
+    { c: E.red, t: E.ink, x: 10, w: 270, label: "NIGHT DRIVE" },
+    { c: E.paper, t: E.ink, x: 0, w: 280, label: "AFTER HOURS" },
+    { c: E.blue, t: E.paper, x: 22, w: 262, label: "HEAT WAVE" },
     { c: E.ink, t: E.paper, x: 4, w: 276, label: "SIDE TWO" },
-    { c: E.paper, t: E.ink, x: 16, w: 268, label: "LATE SET" },
-    { c: E.red, t: E.ink, x: 0, w: 280, label: "ONE FOR ALICE" },
+    { c: E.paper, t: E.ink, x: 16, w: 268, label: "MIDNIGHT TV" },
+    { c: E.red, t: E.ink, x: 0, w: 280, label: "NEON STATIC" },
   ];
   return (
     <svg viewBox="0 0 300 136" className="w-full max-w-[460px]" role="img" aria-label="A stack of record sleeves seen from the side">
