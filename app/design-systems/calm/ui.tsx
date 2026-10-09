@@ -88,7 +88,7 @@ export function TextLink({ state, children, href = "#" }: { state?: State; child
 /* Text input and select */
 
 const FIELD =
-  "min-h-11 w-full rounded-calm-6 border border-calm-muted bg-calm-surface px-calm-12 py-calm-8 text-calm-body text-calm-text placeholder:text-calm-muted st-hover:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg st-disabled:text-calm-muted";
+  "min-h-11 w-full rounded-calm-6 border border-calm-muted bg-calm-surface px-calm-12 py-calm-8 text-calm-body text-calm-text placeholder:text-calm-muted st-hover:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-surface st-disabled:text-calm-muted st-disabled:placeholder:opacity-60";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
