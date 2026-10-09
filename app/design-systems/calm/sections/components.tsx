@@ -63,7 +63,7 @@ export default function Components() {
             tabs={[
               { name: "Week", panel: "3 records played this week." },
               { name: "Month", panel: "11 records played this month." },
-              { name: "All", panel: "41 records in the collection." },
+              { name: "Year", panel: "26 records played this year." },
             ]}
           />
           <div className="mt-calm-24">
