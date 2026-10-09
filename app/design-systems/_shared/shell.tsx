@@ -12,7 +12,7 @@ export default function DsShell({ theme, children }: { theme: DsTheme; children?
         <HubLink className="mb-ds-16" />
         <header>
           <p className="text-ds-label ds-label text-ds-muted">Design system · {theme.order}</p>
-          <h1 className="mt-ds-12 ds-head text-ds-display font-normal">{theme.name} · Design System</h1>
+          <h1 className="mt-ds-12 ds-head ds-glow text-ds-display font-normal">{theme.name} · Design System</h1>
           <p className="mt-ds-12 max-w-xl text-ds-muted">
             A UI library built from the{" "}
             <Link href={theme.mood} className="text-ds-text underline underline-offset-4">

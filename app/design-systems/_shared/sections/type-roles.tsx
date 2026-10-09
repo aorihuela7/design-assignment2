@@ -4,10 +4,10 @@ import Section from "../section";
 const WEIGHT: Record<number, string> = { 400: "Regular", 500: "Medium", 700: "Bold", 900: "Black" };
 
 const ROLES: { key: RoleKey; name: string; cls: string; sample: string; head: boolean }[] = [
-  { key: "display", name: "Display", cls: "ds-head text-ds-display font-normal", sample: "41 records", head: true },
+  { key: "display", name: "Display", cls: "ds-head ds-glow text-ds-display font-normal", sample: "41 records", head: true },
   { key: "heading", name: "Heading", cls: "ds-head text-ds-heading font-normal", sample: "This Week", head: true },
   { key: "body", name: "Body", cls: "font-ds-body text-ds-body font-normal", sample: "Played three albums this week.", head: false },
-  { key: "label", name: "Label", cls: "font-ds-body text-ds-label ds-label text-ds-muted", sample: "Last spun", head: false },
+  { key: "label", name: "Label", cls: "text-ds-label ds-label text-ds-muted", sample: "Last spun", head: false },
 ];
 
 export default function TypeRoles({ theme }: { theme: DsTheme }) {
@@ -23,7 +23,7 @@ export default function TypeRoles({ theme }: { theme: DsTheme }) {
               <div>
                 <p className="text-ds-label ds-label text-ds-muted">{r.name}</p>
                 <p className="mt-ds-4 text-ds-muted">
-                  {r.head ? theme.fonts.headFamily : theme.fonts.bodyFamily}
+                  {r.head ? theme.fonts.headFamily : r.key === "label" ? (theme.fonts.labelFamily ?? theme.fonts.bodyFamily) : theme.fonts.bodyFamily}
                   <br />
                   {t.size}/{t.line} · {WEIGHT[weight]}
                 </p>

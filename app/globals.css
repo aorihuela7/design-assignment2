@@ -88,6 +88,12 @@ body {
   --color-ds-on-accent: var(--ds-on-accent);
   --color-ds-ctl: var(--ds-ctl);
   --color-ds-rule: var(--ds-rule);
+  --color-ds-primary-bg: var(--ds-primary-bg);
+  --color-ds-primary-fg: var(--ds-primary-fg);
+  --color-ds-primary-hover: var(--ds-primary-hover);
+  --color-ds-primary-pressed: var(--ds-primary-pressed);
+  --color-ds-primary-selected: var(--ds-primary-selected);
+  --color-ds-primary-selected-fg: var(--ds-primary-selected-fg);
 
   --font-ds-body: var(--ds-font-body);
 
@@ -116,9 +122,15 @@ body {
 @utility ds-head {
   font-family: var(--ds-font-head);
   font-weight: var(--ds-head-weight);
+  font-style: var(--ds-head-style);
   text-transform: var(--ds-head-transform);
 }
+/* Neon glow, used only on Display text (none outside Jukebox). */
+@utility ds-glow {
+  text-shadow: var(--ds-display-glow);
+}
 @utility ds-label {
+  font-family: var(--ds-font-label);
   font-weight: var(--ds-label-weight);
   letter-spacing: var(--ds-label-tracking);
   text-transform: uppercase;

@@ -33,7 +33,7 @@ function join(...parts: (string | undefined | false)[]) {
 
 const BUTTON = {
   primary:
-    "bg-ds-accent text-ds-on-accent st-hover:bg-ds-accent-hover st-press:bg-ds-accent-pressed st-selected:bg-ds-accent-hover st-disabled:bg-ds-border st-disabled:text-ds-muted",
+    "border-(length:--ds-primary-bw) border-ds-accent bg-ds-primary-bg text-ds-primary-fg st-hover:bg-ds-primary-hover st-hover:shadow-(--ds-primary-glow) st-press:bg-ds-primary-pressed st-selected:bg-ds-primary-selected st-selected:text-ds-primary-selected-fg st-disabled:border-ds-border st-disabled:bg-ds-border st-disabled:text-ds-muted st-disabled:shadow-none",
   secondary:
     "border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface text-ds-text st-hover:bg-ds-bg st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg st-disabled:border-ds-border st-disabled:bg-ds-surface st-disabled:text-ds-muted",
 } as const;
@@ -55,7 +55,7 @@ export function Button({
         "inline-flex min-h-11 items-center justify-center gap-ds-8 whitespace-nowrap rounded-ds-12 px-ds-16 py-ds-8 text-ds-body font-medium st-press:scale-95 st-disabled:cursor-not-allowed",
         BUTTON[variant],
         focusRing,
-        "transition-[color,background-color,border-color,transform] duration-(--ds-duration) ease-out motion-reduce:transition-none",
+        "transition-[color,background-color,border-color,transform,box-shadow] duration-(--ds-duration) ease-out motion-reduce:transition-none",
         className,
         s.className,
       )}
@@ -302,7 +302,7 @@ export function Badge({ children }: { children: ReactNode }) {
 /* Dialogs: native <dialog>, so focus is trapped, Esc closes it, and focus returns to the opener. */
 
 const DIALOG =
-  "m-auto w-[min(92vw,28rem)] rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-0 font-ds-body text-ds-body text-ds-text backdrop:bg-ds-text/40";
+  "m-auto w-[min(92vw,28rem)] rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-0 font-ds-body text-ds-body text-ds-text backdrop:bg-(--ds-backdrop)";
 
 function CloseButton({ onClick }: { onClick: () => void }) {
   return (

@@ -36,7 +36,28 @@ export type DsTheme = {
     bodyFamily: string;
     headTransform: "none" | "uppercase";
     headWeight: number;
+    headStyle?: "normal" | "italic";
+    /** Label face; defaults to the body face. */
+    label?: string;
+    labelFamily?: string;
   };
+  /** Neon glow on Display text only; defaults to none. */
+  displayGlow?: string;
+  /** Primary button look; defaults to a filled accent block. */
+  primary?: {
+    bg: string;
+    fg: string;
+    hoverBg: string;
+    pressedBg: string;
+    selectedBg: string;
+    selectedFg: string;
+    borderWidth: string;
+    hoverGlow: string;
+  };
+  /** Palette colors that are never text or the primary action. */
+  decorative?: { name: string; hex: string }[];
+  /** Modal backdrop; defaults to Text at 40%. */
+  backdrop?: string;
   type: Record<RoleKey, { size: number; line: number; weight: number }>;
   typeUse: Record<RoleKey, string>;
   typeIntro: string;
@@ -103,6 +124,7 @@ export function assertContrast(theme: DsTheme) {
     ["Muted on Background", p.muted, p.bg],
     ["Muted on Surface", p.muted, p.surface],
     ["Text on Accent", p.onAccent, p.accent],
+    ...(theme.primary && theme.primary.bg === "transparent" ? ([["Accent text on Background", p.accent, p.bg]] as const) : []),
   ] as const) {
     if (contrast(fg, bg) < 4.5) throw new Error(`${theme.name}: ${name} is below 4.5:1`);
   }
@@ -112,7 +134,29 @@ export function assertContrast(theme: DsTheme) {
 export function themeVars(t: DsTheme): Record<string, string> {
   const p = t.palette;
   const a = accentStates(p);
+  const primary = t.primary ?? {
+    bg: p.accent,
+    fg: p.onAccent,
+    hoverBg: a.hover,
+    pressedBg: a.pressed,
+    selectedBg: a.hover,
+    selectedFg: p.onAccent,
+    borderWidth: "0px",
+    hoverGlow: "none",
+  };
   const vars: Record<string, string> = {
+    "--ds-primary-bg": primary.bg,
+    "--ds-primary-fg": primary.fg,
+    "--ds-primary-hover": primary.hoverBg,
+    "--ds-primary-pressed": primary.pressedBg,
+    "--ds-primary-selected": primary.selectedBg,
+    "--ds-primary-selected-fg": primary.selectedFg,
+    "--ds-primary-bw": primary.borderWidth,
+    "--ds-primary-glow": primary.hoverGlow,
+    "--ds-font-label": t.fonts.label ?? t.fonts.body,
+    "--ds-head-style": t.fonts.headStyle ?? "normal",
+    "--ds-display-glow": t.displayGlow ?? "none",
+    "--ds-backdrop": t.backdrop ?? `color-mix(in srgb, ${p.text} 40%, transparent)`,
     "--ds-bg": p.bg,
     "--ds-surface": p.surface,
     "--ds-text": p.text,
@@ -136,7 +180,7 @@ export function themeVars(t: DsTheme): Record<string, string> {
     "--ds-radius-6": `${t.radiusScale[1]}px`,
     "--ds-radius-12": `${t.radiusScale[2]}px`,
     "--ds-duration": t.motion.duration,
-    "--hub-font": "var(--ds-font-body)",
+    "--hub-font": "var(--ds-font-label)",
     "--hub-size": t.hub.size,
     "--hub-weight": t.hub.weight,
     "--hub-tracking": t.hub.tracking,
