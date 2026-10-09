@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ColorRoles from "./sections/color-roles";
+import SpacingShape from "./sections/spacing-shape";
 import TypeRoles from "./sections/type-roles";
 import { themeVars } from "./tokens";
 
@@ -24,6 +25,7 @@ export default function CalmDesignSystem() {
 
         <ColorRoles />
         <TypeRoles />
+        <SpacingShape />
       </main>
     </div>
   );
