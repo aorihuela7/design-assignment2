@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Record } from "../../../mood-boards/calm/art";
 import { records } from "../records";
 import Section from "../section";
-import { Badge, Button, Checkbox, ChipGroup, Field, LogModal, Radio, Select, Tabs, TextInput, TextLink, Toggle } from "../ui";
+import { Badge, Button, Checkbox, ChipGroup, Field, LogModal, Radio, RecordList, Select, Tabs, TextInput, TextLink, Toggle } from "../ui";
 
 function Group({ title, children, wide }: { title: string; children: ReactNode; wide?: boolean }) {
   return (
@@ -72,6 +72,7 @@ export default function Components() {
         </Group>
 
         <Group title="Card and badge">
+          <p className="mb-calm-16 text-calm-muted">A card only shows a record. It is not a button, so it has no arrow and no hover.</p>
           <article className="flex gap-calm-16 rounded-calm-12 border border-calm-border bg-calm-bg p-calm-16">
             <Record size={80} />
             <div className="min-w-0">
@@ -85,17 +86,8 @@ export default function Components() {
         </Group>
 
         <Group title="List rows">
-          <ul className="divide-y divide-calm-border rounded-calm-12 border border-calm-border bg-calm-bg">
-            {records.map((r) => (
-              <li key={r.title} className="flex items-baseline justify-between gap-calm-16 px-calm-16 py-calm-12">
-                <div className="min-w-0">
-                  <p className="font-calm-serif text-calm-heading">{r.title}</p>
-                  <p className="text-calm-muted">{r.artist}</p>
-                </div>
-                <p className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{r.year}</p>
-              </li>
-            ))}
-          </ul>
+          <RecordList items={records} />
+          <p className="mt-calm-16 text-calm-muted">Each row is a button: the arrow says it opens something, and the chosen row stays marked.</p>
         </Group>
 
         <Group title="Modal" wide>

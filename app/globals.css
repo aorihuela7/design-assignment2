@@ -71,7 +71,7 @@ body {
 @custom-variant st-hover (&:is(:hover:not(:disabled, [aria-disabled="true"]), [data-state="hover"]));
 @custom-variant st-focus (&:is(:focus-visible, [data-state="focus"]));
 @custom-variant st-press (&:is(:active:not(:disabled, [aria-disabled="true"]), [data-state="pressed"]));
-@custom-variant st-selected (&:is([aria-pressed="true"], [aria-selected="true"], [aria-checked="true"], :checked, [data-state="selected"]));
+@custom-variant st-selected (&:is([aria-pressed="true"], [aria-selected="true"], [aria-checked="true"], [aria-current="true"], :checked, [data-state="selected"]));
 @custom-variant st-disabled (&:is(:disabled, [aria-disabled="true"], [data-state="disabled"]));
 
 /* Calm design system: maps the scoped --calm-* variables (set on [data-theme="calm"]) into Tailwind.

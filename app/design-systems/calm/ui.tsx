@@ -1,6 +1,8 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import { Record } from "../../mood-boards/calm/art";
+import type { records } from "./records";
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 
 // The Calm control library. Every control styles its states with the st-* variants, which match the
@@ -295,7 +297,115 @@ export function Badge({ children }: { children: ReactNode }) {
   );
 }
 
-/* Modal: a native dialog, so focus is trapped, Esc closes it, and focus returns to the opener. */
+/* Dialogs: native <dialog>, so focus is trapped, Esc closes it, and focus returns to the opener. */
+
+const DIALOG =
+  "m-auto w-[min(92vw,28rem)] rounded-calm-12 border border-calm-border bg-calm-surface p-0 font-calm-sans text-calm-body text-calm-text backdrop:bg-calm-text/40";
+
+function CloseButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label="Close"
+      onClick={onClick}
+      className={join("-mr-calm-8 -mt-calm-4 grid h-11 w-11 place-items-center rounded-calm-12 st-hover:bg-calm-bg st-press:bg-calm-border", control)}
+    >
+      <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" aria-hidden>
+        <path d="M1 1l12 12M13 1 1 13" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      </svg>
+    </button>
+  );
+}
+
+/* List rows: each row is a button that selects the record and opens its detail panel. */
+
+type RecordItem = (typeof records)[number];
+
+export function RecordRow({ record, selected, state, onSelect }: { record: RecordItem; selected?: boolean; state?: State; onSelect?: () => void }) {
+  const s = sample(state);
+  const on = selected ?? state === "selected";
+  return (
+    <button
+      type="button"
+      aria-haspopup="dialog"
+      aria-current={on ? "true" : undefined}
+      onClick={onSelect}
+      {...s}
+      className={join(
+        "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left st-hover:bg-calm-bg st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface",
+        control,
+        s.className,
+      )}
+    >
+      <span className="min-w-0">
+        <span className="block font-calm-serif text-calm-heading">{record.title}</span>
+        <span className={join("block", on ? "text-calm-border" : "text-calm-muted")}>{record.artist}</span>
+      </span>
+      <span className="flex shrink-0 items-center gap-calm-12">
+        <span className={join("text-calm-label font-medium uppercase tracking-[0.18em]", on ? "text-calm-border" : "text-calm-muted")}>{record.year}</span>
+        {on ? (
+          <span aria-hidden>✓</span>
+        ) : (
+          <svg viewBox="0 0 8 12" className="h-3 w-2 text-calm-muted" aria-hidden>
+            <path d="m1.5 1.5 5 4.5-5 4.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+        )}
+      </span>
+    </button>
+  );
+}
+
+export function RecordList({ items }: { items: readonly RecordItem[] }) {
+  const [active, setActive] = useState<number | null>(null);
+  const ref = useRef<HTMLDialogElement>(null);
+  const current = active === null ? null : items[active];
+
+  return (
+    <>
+      <ul className="divide-y divide-calm-border rounded-calm-12 border border-calm-border bg-calm-surface">
+        {items.map((r, i) => (
+          <li key={r.title} className="first:[&>button]:rounded-t-[11px] last:[&>button]:rounded-b-[11px]">
+            <RecordRow
+              record={r}
+              selected={active === i}
+              onSelect={() => {
+                setActive(i);
+                ref.current?.showModal();
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+      <dialog ref={ref} aria-labelledby="record-title" onClick={(e) => e.target === ref.current && ref.current?.close()} className={DIALOG}>
+        {current && (
+          <div className="p-calm-24">
+            <div className="flex items-start justify-between gap-calm-16">
+              <h3 id="record-title" className="font-calm-serif text-calm-heading font-normal">
+                {current.title}
+              </h3>
+              <CloseButton onClick={() => ref.current?.close()} />
+            </div>
+            <div className="mt-calm-16 flex gap-calm-16">
+              <Record size={88} />
+              <div>
+                {current.isNew && <Badge>New</Badge>}
+                <p className="mt-calm-8">{current.artist}</p>
+                <p className="text-calm-muted">
+                  {current.year} · {current.genre}
+                </p>
+              </div>
+            </div>
+            <div className="mt-calm-24 flex justify-end">
+              <Button onClick={() => ref.current?.close()}>Close</Button>
+            </div>
+          </div>
+        )}
+      </dialog>
+    </>
+  );
+}
+
+/* Modal: log a record */
 
 export function LogModal() {
   const ref = useRef<HTMLDialogElement>(null);
@@ -304,12 +414,7 @@ export function LogModal() {
       <Button variant="primary" onClick={() => ref.current?.showModal()}>
         Log a record
       </Button>
-      <dialog
-        ref={ref}
-        aria-labelledby="log-title"
-        onClick={(e) => e.target === ref.current && ref.current?.close()}
-        className="m-auto w-[min(92vw,28rem)] rounded-calm-12 border border-calm-border bg-calm-surface p-0 font-calm-sans text-calm-body text-calm-text backdrop:bg-calm-text/40"
-      >
+      <dialog ref={ref} aria-labelledby="log-title" onClick={(e) => e.target === ref.current && ref.current?.close()} className={DIALOG}>
         <form
           method="dialog"
           onSubmit={(e) => {
@@ -322,19 +427,7 @@ export function LogModal() {
             <h3 id="log-title" className="font-calm-serif text-calm-heading font-normal">
               Log a record
             </h3>
-            <button
-              type="button"
-              aria-label="Close"
-              onClick={() => ref.current?.close()}
-              className={join(
-                "-mr-calm-8 -mt-calm-4 grid h-11 w-11 place-items-center rounded-calm-12 st-hover:bg-calm-bg st-press:bg-calm-border",
-                control,
-              )}
-            >
-              <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" aria-hidden>
-                <path d="M1 1l12 12M13 1 1 13" stroke="currentColor" strokeWidth="1.5" fill="none" />
-              </svg>
-            </button>
+            <CloseButton onClick={() => ref.current?.close()} />
           </div>
           <div className="mt-calm-16 space-y-calm-16">
             <Field label="Title">
