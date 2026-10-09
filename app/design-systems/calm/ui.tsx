@@ -204,12 +204,12 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
 /* Tabs */
 
 const TAB =
-  "min-h-11 border-b-2 border-transparent px-calm-12 py-calm-8 text-calm-body text-calm-muted st-hover:text-calm-text st-press:bg-calm-border st-selected:border-calm-text st-selected:font-medium st-selected:text-calm-text st-disabled:cursor-not-allowed st-disabled:text-calm-muted st-disabled:opacity-50";
+  "relative min-h-11 overflow-hidden px-calm-12 py-calm-8 text-calm-body text-calm-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:text-calm-text st-press:bg-calm-border st-selected:font-medium st-selected:after:bg-calm-text st-selected:text-calm-text st-disabled:cursor-not-allowed st-disabled:text-calm-muted st-disabled:opacity-50";
 
 export function Tab({ state, children }: { state?: State; children: ReactNode }) {
   const s = sample(state);
   return (
-    <button type="button" role="tab" aria-selected={state === "selected"} {...s} className={join(TAB, "rounded-t-calm-6", control, s.className)}>
+    <button type="button" role="tab" aria-selected={state === "selected"} {...s} className={join(TAB, "rounded-calm-6", control, s.className)}>
       {children}
     </button>
   );
@@ -248,7 +248,7 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
               if (e.key === "Home") move(0);
               if (e.key === "End") move(tabs.length - 1);
             }}
-            className={join(TAB, "-mb-px rounded-t-calm-6", control)}
+            className={join(TAB, "-mb-px rounded-calm-6", control)}
           >
             {t.name}
           </button>
