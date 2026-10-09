@@ -5,11 +5,11 @@ const paper = "#F2EAD3";
 const ink = "#111111";
 const moodAccent = "#E4472B";
 
-// Paper text on the mood board's red-orange fails 4.5:1, so darken it toward ink until it passes.
+// Paper text on the mood board's red-orange fails 4.5:1, so darken it toward ink until it passes with a little margin.
 function darkenAccent() {
   for (let t = 0; t <= 1; t += 0.01) {
     const c = mix(moodAccent, ink, t);
-    if (contrast(paper, c) >= 4.5) return c;
+    if (contrast(paper, c) >= 4.6) return c;
   }
   return ink;
 }
