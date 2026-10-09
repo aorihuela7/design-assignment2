@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Section from "../section";
 import { Button } from "../ui";
 
-const ICON = "h-8 w-8 text-calm-text";
+const ICON = "h-8 w-8 text-ds-text";
 
 const STATES: { name: string; title: string; body: string; icon: ReactNode; action?: ReactNode; role?: "status" | "alert" }[] = [
   {
@@ -63,16 +63,16 @@ const STATES: { name: string; title: string; body: string; icon: ReactNode; acti
 export default function UiStates() {
   return (
     <Section n={6} title="UI states">
-      <p className="max-w-xl text-calm-muted">Every screen can be empty, loading, broken, or done. Each state has an icon and a word, never color alone.</p>
-      <ul className="mt-calm-24 grid gap-calm-16 sm:grid-cols-2 lg:grid-cols-4">
+      <p className="max-w-xl text-ds-muted">Every screen can be empty, loading, broken, or done. Each state has an icon and a word, never color alone.</p>
+      <ul className="mt-ds-24 grid gap-ds-16 sm:grid-cols-2 lg:grid-cols-4">
         {STATES.map((s) => (
-          <li key={s.name} className="rounded-calm-12 border border-calm-border bg-calm-surface p-calm-24">
+          <li key={s.name} className="rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-ds-24">
             <div role={s.role} className="flex h-full flex-col">
-              <p className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{s.name}</p>
-              <div className="mt-calm-16">{s.icon}</div>
-              <h3 className="mt-calm-12 font-calm-serif text-calm-heading font-normal">{s.title}</h3>
-              <p className="mt-calm-4 text-calm-muted">{s.body}</p>
-              {s.action && <div className="mt-calm-16">{s.action}</div>}
+              <p className="text-ds-label ds-label text-ds-muted">{s.name}</p>
+              <div className="mt-ds-16">{s.icon}</div>
+              <h3 className="mt-ds-12 ds-head text-ds-heading font-normal">{s.title}</h3>
+              <p className="mt-ds-4 text-ds-muted">{s.body}</p>
+              {s.action && <div className="mt-ds-16">{s.action}</div>}
             </div>
           </li>
         ))}

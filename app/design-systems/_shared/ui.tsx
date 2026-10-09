@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { Record } from "../../mood-boards/calm/art";
 import type { records } from "./records";
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 
@@ -22,8 +21,8 @@ function sample(state?: State) {
   };
 }
 
-const focusRing = "outline-offset-2 st-focus:outline-2 st-focus:outline-calm-text";
-const fade = "transition-[color,background-color,border-color,transform] duration-200 ease-out motion-reduce:transition-none";
+const focusRing = "outline-offset-2 st-focus:outline-2 st-focus:outline-ds-text";
+const fade = "transition-[color,background-color,border-color,transform] duration-(--ds-duration) ease-out motion-reduce:transition-none";
 const control = `${focusRing} ${fade}`;
 
 function join(...parts: (string | undefined | false)[]) {
@@ -34,9 +33,9 @@ function join(...parts: (string | undefined | false)[]) {
 
 const BUTTON = {
   primary:
-    "bg-calm-accent text-calm-surface st-hover:bg-calm-accent-hover st-press:bg-calm-accent-pressed st-selected:bg-calm-accent-hover st-disabled:bg-calm-border st-disabled:text-calm-muted",
+    "bg-ds-accent text-ds-on-accent st-hover:bg-ds-accent-hover st-press:bg-ds-accent-pressed st-selected:bg-ds-accent-hover st-disabled:bg-ds-border st-disabled:text-ds-muted",
   secondary:
-    "border border-calm-muted bg-calm-surface text-calm-text st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-disabled:border-calm-border st-disabled:bg-calm-surface st-disabled:text-calm-muted",
+    "border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface text-ds-text st-hover:bg-ds-bg st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg st-disabled:border-ds-border st-disabled:bg-ds-surface st-disabled:text-ds-muted",
 } as const;
 
 export function Button({
@@ -53,10 +52,10 @@ export function Button({
       {...props}
       {...s}
       className={join(
-        "inline-flex min-h-11 items-center justify-center gap-calm-8 whitespace-nowrap rounded-calm-12 px-calm-16 py-calm-8 text-calm-body font-medium st-press:scale-95 st-disabled:cursor-not-allowed",
+        "inline-flex min-h-11 items-center justify-center gap-ds-8 whitespace-nowrap rounded-ds-12 px-ds-16 py-ds-8 text-ds-body font-medium st-press:scale-95 st-disabled:cursor-not-allowed",
         BUTTON[variant],
         focusRing,
-        "transition-[color,background-color,border-color,transform] duration-200 ease-out motion-reduce:transition-none",
+        "transition-[color,background-color,border-color,transform] duration-(--ds-duration) ease-out motion-reduce:transition-none",
         className,
         s.className,
       )}
@@ -75,7 +74,7 @@ export function TextLink({ state, children, href = "#" }: { state?: State; child
       tabIndex={static_ ? -1 : undefined}
       onClick={(e) => e.preventDefault()}
       className={join(
-        "-mx-calm-4 inline-block rounded-calm-6 px-calm-4 text-calm-text underline decoration-calm-muted underline-offset-4 st-hover:bg-calm-bg st-hover:decoration-2 st-hover:decoration-calm-text st-press:translate-y-px st-press:bg-calm-border st-press:decoration-2 st-press:decoration-calm-text",
+        "-mx-ds-4 inline-block rounded-ds-6 px-ds-4 text-ds-text underline decoration-ds-muted underline-offset-4 st-hover:bg-ds-bg st-hover:decoration-2 st-hover:decoration-ds-text st-press:translate-y-px st-press:bg-ds-border st-press:decoration-2 st-press:decoration-ds-text",
         control,
         static_ && "pointer-events-none",
       )}
@@ -88,12 +87,12 @@ export function TextLink({ state, children, href = "#" }: { state?: State; child
 /* Text input and select */
 
 const FIELD =
-  "min-h-11 w-full rounded-calm-6 border border-calm-muted bg-calm-surface px-calm-12 py-calm-8 text-calm-body text-calm-text placeholder:text-calm-muted st-hover:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-surface st-disabled:text-calm-muted st-disabled:placeholder:opacity-60";
+  "min-h-11 w-full rounded-ds-6 border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface px-ds-12 py-ds-8 text-ds-body text-ds-text placeholder:text-ds-muted st-hover:bg-ds-bg st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:bg-ds-surface st-disabled:text-ds-muted st-disabled:placeholder:opacity-60";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-calm-4 block text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{label}</span>
+      <span className="mb-ds-4 block text-ds-label ds-label text-ds-muted">{label}</span>
       {children}
     </label>
   );
@@ -111,7 +110,7 @@ export function Select({ state, children, ...props }: { state?: State; children:
       <select {...props} {...s} className={join(FIELD, "appearance-none pr-10", control, s.className)}>
         {children}
       </select>
-      <svg viewBox="0 0 12 8" className="pointer-events-none absolute right-calm-12 top-1/2 h-2 w-3 -translate-y-1/2 text-calm-text" aria-hidden>
+      <svg viewBox="0 0 12 8" className="pointer-events-none absolute right-ds-12 top-1/2 h-2 w-3 -translate-y-1/2 text-ds-text" aria-hidden>
         <path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     </div>
@@ -121,12 +120,12 @@ export function Select({ state, children, ...props }: { state?: State; children:
 /* Checkbox and radio */
 
 const BOX =
-  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-90 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-surface";
+  "grid h-5 w-5 shrink-0 appearance-none place-content-center border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface st-hover:bg-ds-bg st-press:scale-90 st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-surface st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:bg-ds-surface";
 
 export function Checkbox({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
   return (
-    <label className={join("inline-flex min-h-11 items-center gap-calm-12", state === "disabled" && "text-calm-muted")}>
+    <label className={join("inline-flex min-h-11 items-center gap-ds-12", state === "disabled" && "text-ds-muted")}>
       <input
         type="checkbox"
         defaultChecked={state === "selected"}
@@ -134,7 +133,7 @@ export function Checkbox({ label, state, hideLabel, ...props }: { label: string;
         {...s}
         className={join(
           BOX,
-          "rounded-calm-6 before:text-[13px] before:leading-none before:text-calm-text before:opacity-0 before:content-['✓'] st-selected:before:opacity-100",
+          "rounded-ds-6 before:text-[13px] before:leading-none before:text-ds-text before:opacity-0 before:content-['✓'] st-selected:before:opacity-100",
           control,
           s.className,
         )}
@@ -147,7 +146,7 @@ export function Checkbox({ label, state, hideLabel, ...props }: { label: string;
 export function Radio({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
   return (
-    <label className={join("inline-flex min-h-11 items-center gap-calm-12", state === "disabled" && "text-calm-muted")}>
+    <label className={join("inline-flex min-h-11 items-center gap-ds-12", state === "disabled" && "text-ds-muted")}>
       <input
         type="radio"
         defaultChecked={state === "selected"}
@@ -155,7 +154,7 @@ export function Radio({ label, state, hideLabel, ...props }: { label: string; st
         {...s}
         className={join(
           BOX,
-          "rounded-calm-12 before:h-2 before:w-2 before:rounded-calm-12 before:bg-calm-text before:opacity-0 before:content-[''] st-selected:before:opacity-100",
+          "rounded-ds-12 before:h-2 before:w-2 before:rounded-ds-12 before:bg-ds-text before:opacity-0 before:content-[''] st-selected:before:opacity-100",
           control,
           s.className,
         )}
@@ -172,7 +171,7 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
   const s = sample(state);
   const isOn = state ? state === "selected" : on;
   return (
-    <span className="inline-flex min-h-11 items-center gap-calm-12">
+    <span className="inline-flex min-h-11 items-center gap-ds-12">
       <button
         type="button"
         role="switch"
@@ -181,19 +180,19 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
         onClick={() => setOn(!on)}
         {...s}
         className={join(
-          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-surface",
+          "group relative h-7 w-12 shrink-0 rounded-ds-12 border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface st-hover:bg-ds-bg st-press:scale-95 st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:bg-ds-surface",
           control,
           s.className,
         )}
       >
         <span
           className={join(
-            "absolute left-1 top-1 h-5 w-5 rounded-calm-12 bg-calm-muted transition-transform duration-200 ease-out motion-reduce:transition-none group-st-selected:translate-x-5 group-st-selected:bg-calm-text",
+            "absolute left-1 top-1 h-5 w-5 rounded-ds-12 bg-ds-muted transition-transform duration-(--ds-duration) ease-out motion-reduce:transition-none group-st-selected:translate-x-5 group-st-selected:bg-ds-text",
           )}
         />
       </button>
       {!compact && (
-        <span className={state === "disabled" ? "text-calm-muted" : undefined}>
+        <span className={state === "disabled" ? "text-ds-muted" : undefined}>
           {label}: {isOn ? "On" : "Off"}
         </span>
       )}
@@ -204,12 +203,12 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
 /* Tabs */
 
 const TAB =
-  "relative min-h-11 overflow-hidden px-calm-12 py-calm-8 text-calm-body text-calm-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:text-calm-text st-press:scale-95 st-press:bg-calm-border st-selected:font-medium st-selected:after:bg-calm-text st-selected:text-calm-text st-disabled:cursor-not-allowed st-disabled:text-calm-muted st-disabled:opacity-50";
+  "relative min-h-11 overflow-hidden px-ds-12 py-ds-8 text-ds-body text-ds-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:text-ds-text st-press:scale-95 st-press:bg-ds-border st-selected:font-medium st-selected:after:bg-ds-text st-selected:text-ds-text st-disabled:cursor-not-allowed st-disabled:text-ds-muted st-disabled:opacity-50";
 
 export function Tab({ state, children }: { state?: State; children: ReactNode }) {
   const s = sample(state);
   return (
-    <button type="button" role="tab" aria-selected={state === "selected"} {...s} className={join(TAB, "rounded-calm-6", control, s.className)}>
+    <button type="button" role="tab" aria-selected={state === "selected"} {...s} className={join(TAB, "rounded-ds-6", control, s.className)}>
       {children}
     </button>
   );
@@ -228,7 +227,7 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
 
   return (
     <div>
-      <div role="tablist" aria-label="Period" className="flex border-b border-calm-border">
+      <div role="tablist" aria-label="Period" className="flex border-b border-ds-border">
         {tabs.map((t, i) => (
           <button
             key={t.name}
@@ -248,13 +247,13 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
               if (e.key === "Home") move(0);
               if (e.key === "End") move(tabs.length - 1);
             }}
-            className={join(TAB, "-mb-px rounded-calm-6", control)}
+            className={join(TAB, "-mb-px rounded-ds-6", control)}
           >
             {t.name}
           </button>
         ))}
       </div>
-      <div role="tabpanel" id={`${id}-p${active}`} aria-labelledby={`${id}-t${active}`} className="pt-calm-16">
+      <div role="tabpanel" id={`${id}-p${active}`} aria-labelledby={`${id}-t${active}`} className="pt-ds-16">
         {tabs[active].panel}
       </div>
     </div>
@@ -264,7 +263,7 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
 /* Filter chips */
 
 const CHIP =
-  "inline-flex min-h-9 items-center gap-calm-4 rounded-calm-12 border border-calm-muted bg-calm-surface px-calm-12 py-calm-4 text-calm-body st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-selected:font-medium st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:text-calm-muted";
+  "inline-flex min-h-9 items-center gap-ds-4 rounded-ds-12 border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface px-ds-12 py-ds-4 text-ds-body st-hover:bg-ds-bg st-press:scale-95 st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg st-selected:font-medium st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:text-ds-muted";
 
 export function Chip({ selected, state, children, ...props }: { selected?: boolean; state?: State; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const s = sample(state);
@@ -280,7 +279,7 @@ export function Chip({ selected, state, children, ...props }: { selected?: boole
 export function ChipGroup({ options }: { options: string[] }) {
   const [active, setActive] = useState(options[0]);
   return (
-    <div role="group" aria-label="Genre" className="flex flex-wrap gap-calm-8">
+    <div role="group" aria-label="Genre" className="flex flex-wrap gap-ds-8">
       {options.map((o) => (
         <Chip key={o} selected={active === o} onClick={() => setActive(o)}>
           {o}
@@ -294,7 +293,7 @@ export function ChipGroup({ options }: { options: string[] }) {
 
 export function Badge({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-block rounded-calm-6 border border-calm-text px-calm-8 py-px text-calm-label font-medium uppercase tracking-[0.18em]">
+    <span className="inline-block rounded-ds-6 border border-ds-text px-ds-8 py-px text-ds-label ds-label">
       {children}
     </span>
   );
@@ -303,7 +302,7 @@ export function Badge({ children }: { children: ReactNode }) {
 /* Dialogs: native <dialog>, so focus is trapped, Esc closes it, and focus returns to the opener. */
 
 const DIALOG =
-  "m-auto w-[min(92vw,28rem)] rounded-calm-12 border border-calm-border bg-calm-surface p-0 font-calm-sans text-calm-body text-calm-text backdrop:bg-calm-text/40";
+  "m-auto w-[min(92vw,28rem)] rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-0 font-ds-body text-ds-body text-ds-text backdrop:bg-ds-text/40";
 
 function CloseButton({ onClick }: { onClick: () => void }) {
   return (
@@ -311,7 +310,7 @@ function CloseButton({ onClick }: { onClick: () => void }) {
       type="button"
       aria-label="Close"
       onClick={onClick}
-      className={join("-mr-calm-8 -mt-calm-4 grid h-11 w-11 place-items-center rounded-calm-12 st-hover:bg-calm-bg st-press:bg-calm-border", control)}
+      className={join("-mr-ds-8 -mt-ds-4 grid h-11 w-11 place-items-center rounded-ds-12 st-hover:bg-ds-bg st-press:bg-ds-border", control)}
     >
       <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" aria-hidden>
         <path d="M1 1l12 12M13 1 1 13" stroke="currentColor" strokeWidth="1.5" fill="none" />
@@ -335,21 +334,21 @@ export function RecordRow({ record, selected, state, compact, onSelect }: { reco
       onClick={onSelect}
       {...s}
       className={join(
-        compact ? "flex min-h-11 w-full items-center justify-between gap-calm-8 rounded-calm-6 border border-calm-border px-calm-12 py-calm-8 text-left st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg" : "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left border-l-2 border-transparent st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg",
+        compact ? "flex min-h-11 w-full items-center justify-between gap-ds-8 rounded-ds-6 border border-ds-border px-ds-12 py-ds-8 text-left st-hover:bg-ds-bg st-press:translate-y-px st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg" : "flex min-h-11 w-full items-center justify-between gap-ds-16 px-ds-16 py-ds-12 text-left border-l-2 border-transparent st-hover:bg-ds-bg st-press:translate-y-px st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg",
         control,
         s.className,
       )}
     >
       <span className="min-w-0">
-        <span className={join("block font-calm-serif", compact ? "text-calm-body" : "text-xl")}>{record.title}</span>
-        {!compact && <span className="block text-calm-muted">{record.artist}</span>}
+        <span className={join("block ds-head", compact ? "text-ds-body" : "text-xl")}>{record.title}</span>
+        {!compact && <span className="block text-ds-muted">{record.artist}</span>}
       </span>
-      <span className="flex shrink-0 items-center gap-calm-12">
-        {!compact && <span className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{record.year}</span>}
+      <span className="flex shrink-0 items-center gap-ds-12">
+        {!compact && <span className="text-ds-label ds-label text-ds-muted">{record.year}</span>}
         {on ? (
           <span aria-hidden>✓</span>
         ) : (
-          <svg viewBox="0 0 8 12" className="h-3 w-2 text-calm-muted" aria-hidden>
+          <svg viewBox="0 0 8 12" className="h-3 w-2 text-ds-muted" aria-hidden>
             <path d="m1.5 1.5 5 4.5-5 4.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
           </svg>
         )}
@@ -358,14 +357,14 @@ export function RecordRow({ record, selected, state, compact, onSelect }: { reco
   );
 }
 
-export function RecordList({ items }: { items: readonly RecordItem[] }) {
+export function RecordList({ items, art }: { items: readonly RecordItem[]; art: ReactNode }) {
   const [active, setActive] = useState<number | null>(null);
   const ref = useRef<HTMLDialogElement>(null);
   const current = active === null ? null : items[active];
 
   return (
     <>
-      <ul className="divide-y divide-calm-border rounded-calm-12 border border-calm-border bg-calm-surface">
+      <ul className="divide-y divide-ds-border rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface">
         {items.map((r, i) => (
           <li key={r.title} className="first:[&>button]:rounded-t-[11px] last:[&>button]:rounded-b-[11px]">
             <RecordRow
@@ -381,24 +380,24 @@ export function RecordList({ items }: { items: readonly RecordItem[] }) {
       </ul>
       <dialog ref={ref} aria-labelledby="record-title" onClick={(e) => e.target === ref.current && ref.current?.close()} className={DIALOG}>
         {current && (
-          <div className="p-calm-24">
-            <div className="flex items-start justify-between gap-calm-16">
-              <h3 id="record-title" className="font-calm-serif text-calm-heading font-normal">
+          <div className="p-ds-24">
+            <div className="flex items-start justify-between gap-ds-16">
+              <h3 id="record-title" className="ds-head text-ds-heading font-normal">
                 {current.title}
               </h3>
               <CloseButton onClick={() => ref.current?.close()} />
             </div>
-            <div className="mt-calm-16 flex gap-calm-16">
-              <Record size={88} />
+            <div className="mt-ds-16 flex gap-ds-16">
+              {art}
               <div>
                 {current.isNew && <Badge>New</Badge>}
-                <p className="mt-calm-8">{current.artist}</p>
-                <p className="text-calm-muted">
+                <p className="mt-ds-8">{current.artist}</p>
+                <p className="text-ds-muted">
                   {current.year} · {current.genre}
                 </p>
               </div>
             </div>
-            <div className="mt-calm-24 flex justify-end">
+            <div className="mt-ds-24 flex justify-end">
               <Button onClick={() => ref.current?.close()}>Close</Button>
             </div>
           </div>
@@ -424,15 +423,15 @@ export function LogModal() {
             e.preventDefault();
             ref.current?.close();
           }}
-          className="p-calm-24"
+          className="p-ds-24"
         >
-          <div className="flex items-start justify-between gap-calm-16">
-            <h3 id="log-title" className="font-calm-serif text-calm-heading font-normal">
+          <div className="flex items-start justify-between gap-ds-16">
+            <h3 id="log-title" className="ds-head text-ds-heading font-normal">
               Log a record
             </h3>
             <CloseButton onClick={() => ref.current?.close()} />
           </div>
-          <div className="mt-calm-16 space-y-calm-16">
+          <div className="mt-ds-16 space-y-ds-16">
             <Field label="Title">
               <TextInput placeholder="Evening Hours" autoFocus />
             </Field>
@@ -440,7 +439,7 @@ export function LogModal() {
               <TextInput placeholder="Mara Voss" />
             </Field>
           </div>
-          <div className="mt-calm-24 flex justify-end gap-calm-12">
+          <div className="mt-ds-24 flex justify-end gap-ds-12">
             <Button onClick={() => ref.current?.close()}>Cancel</Button>
             <Button variant="primary" type="submit">
               Log
@@ -458,13 +457,13 @@ export function MotionDemo({ duration }: { duration: string }) {
   const [full, setFull] = useState(false);
   return (
     <div>
-      <div className="h-calm-12 w-full overflow-hidden rounded-calm-6 border border-calm-muted" aria-hidden>
+      <div className="h-ds-12 w-full overflow-hidden rounded-ds-6 border-(length:--ds-ctl-w) border-ds-ctl" aria-hidden>
         <div
-          className="h-full bg-calm-text transition-[width] ease-out motion-reduce:transition-none"
+          className="h-full bg-ds-text transition-[width] ease-out motion-reduce:transition-none"
           style={{ width: full ? "100%" : "25%", transitionDuration: duration }}
         />
       </div>
-      <div className="mt-calm-16">
+      <div className="mt-ds-16">
         <Button onClick={() => setFull(!full)}>Play motion</Button>
       </div>
     </div>

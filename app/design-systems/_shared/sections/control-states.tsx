@@ -54,23 +54,23 @@ const ROWS: { name: string; states: State[]; render: (s: State) => ReactNode }[]
   },
 ];
 
-const label = "text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted";
+const label = "text-ds-label ds-label text-ds-muted";
 
 export default function ControlStates() {
   return (
     <Section n={5} title="Control states">
-      <p className="max-w-xl text-calm-muted">
+      <p className="max-w-xl text-ds-muted">
         Each sample is a static picture of one state; a dash means the state does not apply. The live controls in section 4 respond to the real thing: hover, Tab focus, and press.
       </p>
-      <div className="mt-calm-24 rounded-calm-12 border border-calm-border bg-calm-surface">
+      <div className="mt-ds-24 rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface">
         <table className="block w-full border-collapse md:table md:table-fixed">
           <thead className="hidden md:table-header-group">
-            <tr className="border-b border-calm-border">
-              <th scope="col" className={`${label} p-calm-16 text-left`}>
+            <tr className="border-b border-ds-border">
+              <th scope="col" className={`${label} p-ds-16 text-left`}>
                 Control
               </th>
               {ALL.map((s) => (
-                <th key={s} scope="col" className={`${label} px-calm-8 py-calm-16 text-left`}>
+                <th key={s} scope="col" className={`${label} px-ds-8 py-ds-16 text-left`}>
                   {NAMES[s]}
                 </th>
               ))}
@@ -78,18 +78,18 @@ export default function ControlStates() {
           </thead>
           <tbody className="block md:table-row-group">
             {ROWS.map((row) => (
-              <tr key={row.name} className="grid grid-cols-2 gap-x-calm-16 gap-y-calm-12 border-t border-calm-border p-calm-16 first:border-t-0 md:table-row md:p-0">
-                <th scope="row" className={`${label} col-span-2 text-left md:table-cell md:w-40 md:p-calm-16 md:align-middle`}>
+              <tr key={row.name} className="grid grid-cols-2 gap-x-ds-16 gap-y-ds-12 border-t border-ds-border p-ds-16 first:border-t-0 md:table-row md:p-0">
+                <th scope="row" className={`${label} col-span-2 text-left md:table-cell md:w-40 md:p-ds-16 md:align-middle`}>
                   {row.name}
                 </th>
                 {ALL.map((s) =>
                   row.states.includes(s) ? (
-                    <td key={s} className="flex flex-col items-start gap-calm-8 md:table-cell md:px-calm-8 md:py-calm-12 md:align-middle">
+                    <td key={s} className="flex flex-col items-start gap-ds-8 md:table-cell md:px-ds-8 md:py-ds-12 md:align-middle">
                       {row.render(s)}
                       <span className={`${label} md:hidden`}>{NAMES[s]}</span>
                     </td>
                   ) : (
-                    <td key={s} className="hidden px-calm-8 text-calm-muted md:table-cell md:align-middle">
+                    <td key={s} className="hidden px-ds-8 text-ds-muted md:table-cell md:align-middle">
                       <span aria-hidden>—</span>
                       <span className="sr-only">Not applicable</span>
                     </td>
