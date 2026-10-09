@@ -341,7 +341,7 @@ export function RecordRow({ record, selected, state, compact, onSelect }: { reco
       )}
     >
       <span className="min-w-0">
-        <span className={join("block font-calm-serif", compact ? "text-calm-body" : "text-calm-heading")}>{record.title}</span>
+        <span className={join("block font-calm-serif", compact ? "text-calm-body" : "text-xl")}>{record.title}</span>
         {!compact && <span className={join("block", on ? "text-calm-border" : "text-calm-muted")}>{record.artist}</span>}
       </span>
       <span className="flex shrink-0 items-center gap-calm-12">
