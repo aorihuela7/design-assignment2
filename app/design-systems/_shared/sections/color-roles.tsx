@@ -72,6 +72,23 @@ export default function ColorRoles({ theme }: { theme: DsTheme }) {
         ))}
       </ul>
       {theme.accentNote && <p className="mt-ds-16 max-w-xl text-ds-muted">{theme.accentNote}</p>}
+      {theme.decorative && (
+        <div className="mt-ds-24">
+          <h3 className="text-ds-label ds-label text-ds-muted">Decorative · never text, never the primary action</h3>
+          <ul className="mt-ds-12 grid gap-ds-16 sm:grid-cols-2 lg:grid-cols-3">
+            {theme.decorative.map((d) => (
+              <li key={d.name} className="flex items-center gap-ds-16 rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-ds-16">
+                <div className="h-12 w-16 shrink-0 rounded-ds-6 border border-ds-border" style={{ background: d.hex }} aria-hidden />
+                <div>
+                  <p className="text-ds-label ds-label text-ds-muted">{d.name}</p>
+                  <p className="ds-head">{d.hex}</p>
+                  <p className="text-ds-muted">Illustration only</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </Section>
   );
 }
