@@ -133,3 +133,18 @@ export function Texture({ kind }: { kind: "linen" | "plaster" | "ceramic" }) {
     </svg>
   );
 }
+
+export function Stylus() {
+  return (
+    <svg viewBox="0 0 240 130" className="w-full max-w-[300px]" role="img" aria-label="Stylus touching a record, side view">
+      <rect x="1" y="102" width="238" height="16" rx="4" fill={C.sand} stroke={C.ink} strokeOpacity={0.35} />
+      <rect x="16" y="92" width="208" height="8" rx="4" fill={C.ink} />
+      <rect x="188" y="38" width="22" height="60" rx="4" fill={C.sand} stroke={C.ink} strokeOpacity={0.35} />
+      <circle cx="199" cy="34" r="9" fill={C.oat} stroke={C.ink} strokeOpacity={0.5} />
+      <path d="M199 34 L130 54 L106 66" fill="none" stroke={C.ink} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="86" y="64" width="26" height="12" rx="2" transform="rotate(-20 99 70)" fill={C.ink} />
+      <path d="M94 76 L90 91" stroke={C.ink} strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="90" cy="91.5" r="1.5" fill={C.clay} />
+    </svg>
+  );
+}

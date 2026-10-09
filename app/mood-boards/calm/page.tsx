@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { GrooveDetail, Label, Record, Sleeve, Texture, Tonearm, Turntable } from "./art";
+import { GrooveDetail, Label, Record, Sleeve, Stylus, Texture, Tonearm, Turntable } from "./art";
 
 export const metadata: Metadata = { title: "Calm · Matte · Warm — Mood Board" };
 
@@ -208,7 +208,7 @@ const ARTIFACTS: Artifact[] = [
   },
   {
     name: "Select",
-    size: "m",
+    size: "l",
     ref: "Sort the shelf, nothing more.",
     node: (
       <div className="flex w-full max-w-xs items-center justify-between rounded-calm border border-line bg-oat px-3 py-2 text-sm">
@@ -219,7 +219,7 @@ const ARTIFACTS: Artifact[] = [
   },
   {
     name: "Tabs",
-    size: "m",
+    size: "l",
     ref: "Week, month, all: a quiet underline.",
     node: (
       <div className="flex gap-5 text-sm" role="tablist">
@@ -231,7 +231,7 @@ const ARTIFACTS: Artifact[] = [
   },
   {
     name: "List row",
-    size: "m",
+    size: "l",
     ref: "A tracklist, one line per song.",
     node: (
       <ul className="w-full max-w-xs divide-y divide-line rounded-calm border border-line bg-oat text-sm">
@@ -239,6 +239,12 @@ const ARTIFACTS: Artifact[] = [
         <li className="flex justify-between px-3 py-2"><span>2 · Slow Tea</span><span className="text-muted">4:10</span></li>
       </ul>
     ),
+  },
+  {
+    name: "Stylus",
+    size: "l",
+    ref: "The needle meeting the groove, from the side.",
+    node: <Stylus />,
   },
 ];
 
