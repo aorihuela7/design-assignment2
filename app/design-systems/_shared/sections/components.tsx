@@ -12,7 +12,17 @@ function Group({ title, children, wide, top }: { title: string; children: ReactN
   );
 }
 
-export default function Components({ art, accentName, primaryLabel = "Log" }: { art: (size: number) => ReactNode; accentName: string; primaryLabel?: string }) {
+export default function Components({
+  art,
+  accentName,
+  primaryLabel = "Log",
+  badgeMark,
+}: {
+  art: (size: number) => ReactNode;
+  accentName: string;
+  primaryLabel?: string;
+  badgeMark?: string;
+}) {
   const featured = records[0];
   return (
     <Section n={4} title="Components">
@@ -75,7 +85,7 @@ export default function Components({ art, accentName, primaryLabel = "Log" }: { 
           <article className="flex gap-ds-16 rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-bg p-ds-16">
             {art(80)}
             <div className="min-w-0">
-              <Badge>New</Badge>
+              <Badge mark={badgeMark}>New</Badge>
               <h4 className="mt-ds-8 ds-head text-ds-heading font-normal">{featured.title}</h4>
               <p className="text-ds-muted">
                 {featured.artist} · {featured.year}
@@ -85,7 +95,7 @@ export default function Components({ art, accentName, primaryLabel = "Log" }: { 
         </Group>
 
         <Group title="List rows">
-          <RecordList items={records} art={art(88)} />
+          <RecordList items={records} art={art(88)} badgeMark={badgeMark} />
           <p className="mt-ds-16 text-ds-muted">Each row is a button: the arrow says it opens something, and the chosen row stays marked.</p>
         </Group>
 

@@ -1,6 +1,10 @@
 import { assertContrast, type DsTheme } from "../_shared/theme";
 
-// Calm tokens: the palette and type pair of the Calm mood board (/mood-boards/calm).
+// Calm tokens: the single source for Calm. /design-systems/calm and /mood-boards/calm both read them.
+
+/** Decorative only: never text, never the primary action, never the accent. */
+export const calmDecorative = { clay: "#B5593A", honey: "#D69A2D" } as const;
+
 export const calm: DsTheme = {
   id: "calm",
   name: "Calm",
@@ -8,17 +12,21 @@ export const calm: DsTheme = {
   mood: "/mood-boards/calm",
   blurb: "matte, warm, and quiet.",
   palette: {
-    bg: "#F3EDE2",
-    surface: "#FBF8F2",
-    text: "#2B2722",
-    muted: "#6B6358",
-    border: "#D8CFBF",
-    accent: "#44603F",
-    onAccent: "#FBF8F2",
-    ctl: "#6B6358",
-    rule: "#D8CFBF",
+    bg: "#F3E7CF",
+    surface: "#FCF6E8",
+    text: "#2A2016",
+    muted: "#695740",
+    border: "#DBC8A4",
+    accent: "#3A6B3A",
+    onAccent: "#FCF6E8",
+    ctl: "#695740",
+    rule: "#DBC8A4",
   },
   accentName: "moss",
+  decorative: [
+    { name: "Clay", hex: calmDecorative.clay },
+    { name: "Honey", hex: calmDecorative.honey },
+  ],
   roleNotes: {
     bg: "The page behind everything.",
     surface: "Cards, inputs, panels.",

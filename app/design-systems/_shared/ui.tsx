@@ -291,9 +291,11 @@ export function ChipGroup({ options }: { options: string[] }) {
 
 /* Badge */
 
-export function Badge({ children }: { children: ReactNode }) {
+/** A small badge. `mark` adds a decorative dot in a palette color (never the accent). */
+export function Badge({ children, mark }: { children: ReactNode; mark?: string }) {
   return (
-    <span className="inline-block rounded-ds-6 border border-ds-text px-ds-8 py-px text-ds-label ds-label">
+    <span className="inline-flex items-center gap-ds-4 rounded-ds-6 border border-ds-text px-ds-8 py-px text-ds-label ds-label">
+      {mark && <span className="h-1.5 w-1.5 rounded-full" style={{ background: mark }} aria-hidden />}
       {children}
     </span>
   );
@@ -373,7 +375,7 @@ export function RecordRow({ record, selected, state, compact, onSelect }: { reco
   );
 }
 
-export function RecordList({ items, art }: { items: readonly RecordItem[]; art: ReactNode }) {
+export function RecordList({ items, art, badgeMark }: { items: readonly RecordItem[]; art: ReactNode; badgeMark?: string }) {
   const [active, setActive] = useState<number | null>(null);
   const ref = useRef<HTMLDialogElement>(null);
   const current = active === null ? null : items[active];
@@ -406,7 +408,7 @@ export function RecordList({ items, art }: { items: readonly RecordItem[]; art: 
             <div className="mt-ds-16 flex gap-ds-16">
               {art}
               <div>
-                {current.isNew && <Badge>New</Badge>}
+                {current.isNew && <Badge mark={badgeMark}>New</Badge>}
                 <p className="mt-ds-8">{current.artist}</p>
                 <p className="text-ds-muted">
                   {current.year} · {current.genre}

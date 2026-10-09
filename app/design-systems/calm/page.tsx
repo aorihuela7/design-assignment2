@@ -7,7 +7,7 @@ import SpacingShape from "../_shared/sections/spacing-shape";
 import TypeRoles from "../_shared/sections/type-roles";
 import UiStates from "../_shared/sections/ui-states";
 import DsShell from "../_shared/shell";
-import { calm } from "./theme";
+import { calm, calmDecorative } from "./theme";
 
 export const metadata: Metadata = { title: "Calm · Design System" };
 
@@ -17,7 +17,7 @@ export default function CalmDesignSystem() {
       <ColorRoles theme={calm} />
       <TypeRoles theme={calm} />
       <SpacingShape theme={calm} />
-      <Components accentName={calm.accentName} art={(size) => <Record size={size} />} />
+      <Components accentName={calm.accentName} badgeMark={calmDecorative.clay} art={(size) => <Record size={size} />} />
       <ControlStates />
       <UiStates />
     </DsShell>
