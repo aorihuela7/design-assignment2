@@ -121,7 +121,7 @@ export function Select({ state, children, ...props }: { state?: State; children:
 /* Checkbox and radio */
 
 const BOX =
-  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-90 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg";
+  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-90 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-surface";
 
 export function Checkbox({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
@@ -181,7 +181,7 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
         onClick={() => setOn(!on)}
         {...s}
         className={join(
-          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg",
+          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-bg st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-surface",
           control,
           s.className,
         )}
