@@ -65,3 +65,47 @@ body {
 .theme-night :focus-visible {
   outline-color: var(--color-cyan);
 }
+
+/* Design systems: control-state variants. Each matches the real pseudo-class and a data-state
+   attribute, so a labeled static sample and the live control share one set of classes. */
+@custom-variant st-hover (&:is(:hover:not(:disabled, [aria-disabled="true"]), [data-state="hover"]));
+@custom-variant st-focus (&:is(:focus-visible, [data-state="focus"]));
+@custom-variant st-press (&:is(:active:not(:disabled, [aria-disabled="true"]), [data-state="pressed"]));
+@custom-variant st-selected (&:is([aria-pressed="true"], [aria-selected="true"], [aria-checked="true"], :checked, [data-state="selected"]));
+@custom-variant st-disabled (&:is(:disabled, [aria-disabled="true"], [data-state="disabled"]));
+
+/* Calm design system: maps the scoped --calm-* variables (set on [data-theme="calm"]) into Tailwind.
+   Outside that wrapper the variables are undefined, so nothing leaks. */
+@theme inline {
+  --color-calm-bg: var(--calm-bg);
+  --color-calm-surface: var(--calm-surface);
+  --color-calm-text: var(--calm-text);
+  --color-calm-muted: var(--calm-muted);
+  --color-calm-border: var(--calm-border);
+  --color-calm-accent: var(--calm-accent);
+  --color-calm-accent-hover: var(--calm-accent-hover);
+  --color-calm-accent-pressed: var(--calm-accent-pressed);
+
+  --font-calm-serif: var(--calm-font-serif);
+  --font-calm-sans: var(--calm-font-sans);
+
+  --radius-calm-0: var(--calm-radius-0);
+  --radius-calm-6: var(--calm-radius-6);
+  --radius-calm-12: var(--calm-radius-12);
+
+  --spacing-calm-4: var(--calm-space-4);
+  --spacing-calm-8: var(--calm-space-8);
+  --spacing-calm-12: var(--calm-space-12);
+  --spacing-calm-16: var(--calm-space-16);
+  --spacing-calm-24: var(--calm-space-24);
+  --spacing-calm-32: var(--calm-space-32);
+
+  --text-calm-display: var(--calm-display-size);
+  --text-calm-display--line-height: var(--calm-display-line);
+  --text-calm-heading: var(--calm-heading-size);
+  --text-calm-heading--line-height: var(--calm-heading-line);
+  --text-calm-body: var(--calm-body-size);
+  --text-calm-body--line-height: var(--calm-body-line);
+  --text-calm-label: var(--calm-label-size);
+  --text-calm-label--line-height: var(--calm-label-line);
+}
