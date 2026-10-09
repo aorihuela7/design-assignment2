@@ -23,7 +23,7 @@ function sample(state?: State) {
 }
 
 const focusRing = "outline-offset-2 st-focus:outline-2 st-focus:outline-calm-text";
-const fade = "transition-colors duration-200 ease-out motion-reduce:transition-none";
+const fade = "transition-[color,background-color,border-color,transform] duration-200 ease-out motion-reduce:transition-none";
 const control = `${focusRing} ${fade}`;
 
 function join(...parts: (string | undefined | false)[]) {
@@ -75,7 +75,7 @@ export function TextLink({ state, children, href = "#" }: { state?: State; child
       tabIndex={static_ ? -1 : undefined}
       onClick={(e) => e.preventDefault()}
       className={join(
-        "-mx-calm-4 inline-block rounded-calm-6 px-calm-4 text-calm-text underline decoration-calm-muted underline-offset-4 st-hover:bg-calm-bg st-hover:decoration-2 st-hover:decoration-calm-text st-press:bg-calm-border st-press:decoration-2 st-press:decoration-calm-text",
+        "-mx-calm-4 inline-block rounded-calm-6 px-calm-4 text-calm-text underline decoration-calm-muted underline-offset-4 st-hover:bg-calm-bg st-hover:decoration-2 st-hover:decoration-calm-text st-press:translate-y-px st-press:bg-calm-border st-press:decoration-2 st-press:decoration-calm-text",
         control,
         static_ && "pointer-events-none",
       )}
@@ -121,7 +121,7 @@ export function Select({ state, children, ...props }: { state?: State; children:
 /* Checkbox and radio */
 
 const BOX =
-  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg";
+  "grid h-5 w-5 shrink-0 appearance-none place-content-center border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-90 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg";
 
 export function Checkbox({ label, state, hideLabel, ...props }: { label: string; state?: State; hideLabel?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   const s = sample(state);
@@ -181,7 +181,7 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
         onClick={() => setOn(!on)}
         {...s}
         className={join(
-          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg",
+          "group relative h-7 w-12 shrink-0 rounded-calm-12 border border-calm-muted bg-calm-surface st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:bg-calm-bg",
           control,
           s.className,
         )}
@@ -204,7 +204,7 @@ export function Toggle({ label, defaultOn = false, state, compact }: { label: st
 /* Tabs */
 
 const TAB =
-  "relative min-h-11 overflow-hidden px-calm-12 py-calm-8 text-calm-body text-calm-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:text-calm-text st-press:bg-calm-border st-selected:font-medium st-selected:after:bg-calm-text st-selected:text-calm-text st-disabled:cursor-not-allowed st-disabled:text-calm-muted st-disabled:opacity-50";
+  "relative min-h-11 overflow-hidden px-calm-12 py-calm-8 text-calm-body text-calm-muted after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-transparent st-hover:text-calm-text st-press:scale-95 st-press:bg-calm-border st-selected:font-medium st-selected:after:bg-calm-text st-selected:text-calm-text st-disabled:cursor-not-allowed st-disabled:text-calm-muted st-disabled:opacity-50";
 
 export function Tab({ state, children }: { state?: State; children: ReactNode }) {
   const s = sample(state);
@@ -264,7 +264,7 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
 /* Filter chips */
 
 const CHIP =
-  "inline-flex min-h-9 items-center gap-calm-4 rounded-calm-12 border border-calm-muted bg-calm-surface px-calm-12 py-calm-4 text-calm-body st-hover:bg-calm-bg st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-selected:text-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:text-calm-muted";
+  "inline-flex min-h-9 items-center gap-calm-4 rounded-calm-12 border border-calm-muted bg-calm-surface px-calm-12 py-calm-4 text-calm-body st-hover:bg-calm-bg st-press:scale-95 st-press:bg-calm-border st-selected:border-calm-text st-selected:bg-calm-text st-selected:text-calm-surface st-disabled:cursor-not-allowed st-disabled:border-calm-border st-disabled:text-calm-muted";
 
 export function Chip({ selected, state, children, ...props }: { selected?: boolean; state?: State; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const s = sample(state);
@@ -335,7 +335,7 @@ export function RecordRow({ record, selected, state, compact, onSelect }: { reco
       onClick={onSelect}
       {...s}
       className={join(
-        compact ? "flex min-h-11 w-full items-center justify-between gap-calm-8 rounded-calm-6 border border-calm-border px-calm-12 py-calm-8 text-left st-hover:bg-calm-bg st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface" : "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left st-hover:bg-calm-bg st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface",
+        compact ? "flex min-h-11 w-full items-center justify-between gap-calm-8 rounded-calm-6 border border-calm-border px-calm-12 py-calm-8 text-left st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface" : "flex min-h-11 w-full items-center justify-between gap-calm-16 px-calm-16 py-calm-12 text-left st-hover:bg-calm-bg st-press:translate-y-px st-press:bg-calm-border st-selected:bg-calm-text st-selected:text-calm-surface",
         control,
         s.className,
       )}
