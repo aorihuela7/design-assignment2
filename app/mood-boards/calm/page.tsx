@@ -52,7 +52,7 @@ const ARTIFACTS: Artifact[] = [
     name: "Number",
     size: "s",
     ref: "The speed printed on the label.",
-    node: <p className="font-serif text-5xl">33⅓</p>,
+    node: <p className="font-serif text-4xl">33⅓ <span className="text-lg">rpm</span></p>,
   },
   {
     name: "Sans specimen",
