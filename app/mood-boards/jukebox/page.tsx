@@ -118,11 +118,11 @@ const ARTIFACTS: Artifact[] = [
     ref: "A record on the shelf, boxed in magenta.",
     glow: true,
     node: (
-      <div className="flex w-full items-center gap-4">
+      <div className="flex w-full flex-col items-start gap-3 md:flex-row md:items-center md:gap-4">
         <div className="w-20 shrink-0">
           <NeonRecord />
         </div>
-        <div>
+        <div className="min-w-0">
           <p className={`${mono} text-warm`}>Side A · 1986</p>
           <p className="mt-1 font-neon text-xl font-black uppercase italic leading-tight">Midnight TV</p>
           <p className="mt-1 text-sm text-warm">Laser Hearts</p>
