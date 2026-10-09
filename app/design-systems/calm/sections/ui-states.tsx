@@ -4,7 +4,7 @@ import { Button } from "../ui";
 
 const ICON = "h-8 w-8 text-calm-text";
 
-const STATES: { name: string; title: string; body: string; icon: ReactNode; action?: ReactNode }[] = [
+const STATES: { name: string; title: string; body: string; icon: ReactNode; action?: ReactNode; role?: "status" | "alert" }[] = [
   {
     name: "Empty",
     title: "No records yet",
@@ -23,6 +23,7 @@ const STATES: { name: string; title: string; body: string; icon: ReactNode; acti
   },
   {
     name: "Loading",
+    role: "status",
     title: "Loading…",
     body: "Fetching your records.",
     icon: (
@@ -34,6 +35,7 @@ const STATES: { name: string; title: string; body: string; icon: ReactNode; acti
   },
   {
     name: "Error",
+    role: "alert",
     title: "Couldn’t load",
     body: "Something went wrong on our side.",
     icon: (
@@ -46,6 +48,7 @@ const STATES: { name: string; title: string; body: string; icon: ReactNode; acti
   },
   {
     name: "Success",
+    role: "status",
     title: "Saved",
     body: "Evening Hours is in your collection.",
     icon: (
@@ -63,12 +66,14 @@ export default function UiStates() {
       <p className="max-w-xl text-calm-muted">Every screen can be empty, loading, broken, or done. Each state has an icon and a word, never color alone.</p>
       <ul className="mt-calm-24 grid gap-calm-16 sm:grid-cols-2 lg:grid-cols-4">
         {STATES.map((s) => (
-          <li key={s.name} className="flex flex-col rounded-calm-12 border border-calm-border bg-calm-surface p-calm-24">
-            <p className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{s.name}</p>
-            <div className="mt-calm-16">{s.icon}</div>
-            <h3 className="mt-calm-12 font-calm-serif text-calm-heading font-normal">{s.title}</h3>
-            <p className="mt-calm-4 text-calm-muted">{s.body}</p>
-            {s.action && <div className="mt-calm-16">{s.action}</div>}
+          <li key={s.name} className="rounded-calm-12 border border-calm-border bg-calm-surface p-calm-24">
+            <div role={s.role} className="flex h-full flex-col">
+              <p className="text-calm-label font-medium uppercase tracking-[0.18em] text-calm-muted">{s.name}</p>
+              <div className="mt-calm-16">{s.icon}</div>
+              <h3 className="mt-calm-12 font-calm-serif text-calm-heading font-normal">{s.title}</h3>
+              <p className="mt-calm-4 text-calm-muted">{s.body}</p>
+              {s.action && <div className="mt-calm-16">{s.action}</div>}
+            </div>
           </li>
         ))}
       </ul>
