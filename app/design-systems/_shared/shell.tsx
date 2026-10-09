@@ -5,7 +5,7 @@ import type { DsTheme } from "./theme";
 import { themeVars } from "./theme";
 
 /** The themed wrapper, hub link, and header shared by every design system page. */
-export default function DsShell({ theme, children }: { theme: DsTheme; children: ReactNode }) {
+export default function DsShell({ theme, children }: { theme: DsTheme; children?: ReactNode }) {
   return (
     <div data-theme={theme.id} style={themeVars(theme)} className="min-h-screen bg-ds-bg font-ds-body text-ds-body text-ds-text">
       <main className="mx-auto max-w-[1100px] px-ds-16 pb-ds-32 pt-ds-32 md:px-ds-32 md:pt-ds-32">

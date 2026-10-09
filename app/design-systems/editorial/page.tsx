@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Placeholder from "../../placeholder";
+import DsShell from "../_shared/shell";
+import { editorial } from "./theme";
 
-export const metadata: Metadata = { title: "Editorial — Design System" };
+export const metadata: Metadata = { title: "Editorial · Design System" };
 
-export default function Page() {
-  return <Placeholder eyebrow="Design system" title="Editorial" />;
+export default function EditorialDesignSystem() {
+  return <DsShell theme={editorial} />;
 }
