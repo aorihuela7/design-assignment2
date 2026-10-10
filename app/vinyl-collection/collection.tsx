@@ -152,8 +152,11 @@ export default function Collection() {
   const open = (el: HTMLButtonElement, id: string) => {
     openerRef.current = el;
     setOpenId(id);
-    panelRef.current?.showModal();
   };
+  // Open the dialog after its content has rendered, so focus lands on the Close button inside it.
+  useEffect(() => {
+    if (openId && !panelRef.current?.open) panelRef.current?.showModal();
+  }, [openId]);
   const onPanelClose = () => {
     setOpenId(null);
     openerRef.current?.focus();
