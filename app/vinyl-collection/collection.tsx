@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { Badge, Button, Chip, CloseButton, control, Field, join, keepFocusInside, Select, TextInput } from "../design-systems/_shared/ui";
 import { Cover } from "./cover";
 import LogModal, { type NewRecord } from "./log-modal";
@@ -112,15 +112,27 @@ function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | nul
 
 export default function Collection() {
   const [records, setRecords] = useState<VinylRecord[]>(initialRecords);
-  // Logged records live in memory only; a reload brings back the original twelve.
-  const add = (r: NewRecord) =>
+  const [query, setQuery] = useState("");
+  const [genre, setGenre] = useState<Genre | "All">("All");
+  const [sort, setSort] = useState<SortKey>("added");
+
+  // Logged records live in memory only; a reload brings back the original twelve. After saving, clear the
+  // search and filters and sort by Recently added, so the new record is first, and show a brief "Saved".
+  const [saved, setSaved] = useState<string | null>(null);
+  const savedTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(savedTimer.current), []);
+  const add = (r: NewRecord) => {
     setRecords((rs) => [
       { ...r, id: `logged-${rs.length}-${r.title}`, note: "", tracks: [], added: Math.max(...rs.map((x) => x.added)) + 1, isNew: true },
       ...rs,
     ]);
-  const [query, setQuery] = useState("");
-  const [genre, setGenre] = useState<Genre | "All">("All");
-  const [sort, setSort] = useState<SortKey>("added");
+    setQuery("");
+    setGenre("All");
+    setSort("added");
+    setSaved(r.title);
+    clearTimeout(savedTimer.current);
+    savedTimer.current = setTimeout(() => setSaved(null), 4000);
+  };
 
   // Search first, so each chip can show how many records it would leave.
   const searched = useMemo(() => {
@@ -186,7 +198,13 @@ export default function Collection() {
         <div className="mt-ds-16 flex flex-wrap items-center justify-between gap-ds-12">
           <div role="group" aria-label="Genre" className="flex flex-wrap gap-ds-8">
             {(["All", ...GENRES] as const).map((g) => (
-              <Chip key={g} selected={genre === g} onClick={() => setGenre(g)}>
+              <Chip
+                key={g}
+                selected={genre === g}
+                onClick={() => setGenre(g)}
+                // Selected: bold and a 3px border (padding trimmed by 1px so the chip keeps its size). Ink, never the accent.
+                className="st-selected:border-[3px] st-selected:px-[11px] st-selected:py-[3px] st-selected:font-bold!"
+              >
                 {g}
                 <span className="text-ds-muted">{counts[g]}</span>
                 <span className="sr-only"> records</span>
@@ -222,6 +240,21 @@ export default function Collection() {
       )}
 
       <DetailPanel record={openRecord} dialogRef={panelRef} onClose={onPanelClose} />
+
+      {/* The live region is always there, so the "Saved" message is announced when it appears. */}
+      <div role="status" aria-live="polite" className="pointer-events-none fixed inset-x-ds-16 bottom-ds-24 z-10 flex justify-center">
+        {saved && (
+          <p className="flex items-center gap-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface px-ds-16 py-ds-12">
+            <svg viewBox="0 0 32 32" className="h-6 w-6 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <circle cx="16" cy="16" r="13" />
+              <path d="m10 16.5 4 4 8-9" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span>
+              <span className="ds-head text-xl">Saved</span> <span className="text-ds-muted">{saved} is first in your collection.</span>
+            </span>
+          </p>
+        )}
+      </div>
     </>
   );
 }

@@ -265,11 +265,11 @@ export function Tabs({ tabs }: { tabs: { name: string; panel: string }[] }) {
 const CHIP =
   "inline-flex min-h-9 items-center gap-ds-4 rounded-ds-12 border-(length:--ds-ctl-w) border-ds-ctl bg-ds-surface px-ds-12 py-ds-4 text-ds-body st-hover:bg-ds-bg st-press:scale-95 st-press:bg-ds-border st-selected:border-ds-text st-selected:bg-ds-bg st-selected:font-medium st-disabled:cursor-not-allowed st-disabled:border-ds-border st-disabled:text-ds-muted";
 
-export function Chip({ selected, state, children, ...props }: { selected?: boolean; state?: State; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) {
+export function Chip({ selected, state, children, className, ...props }: { selected?: boolean; state?: State; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const s = sample(state);
   const on = selected ?? state === "selected";
   return (
-    <button type="button" aria-pressed={on} {...props} {...s} className={join(CHIP, control, s.className)}>
+    <button type="button" aria-pressed={on} {...props} {...s} className={join(CHIP, control, className, s.className)}>
       {on && <span aria-hidden>✓</span>}
       {children}
     </button>

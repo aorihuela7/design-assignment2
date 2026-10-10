@@ -40,6 +40,9 @@ export function coverFor(record: Pick<VinylRecord, "added">) {
   return { composition: (record.added * 3) % COMPOSITIONS, colorway: (record.added * 5) % COLORWAYS.length };
 }
 
+/** "a sand circle", "an ink circle", "an olive block". */
+const a = (word: string) => `${/^[aeiou]/.test(word) ? "an" : "a"} ${word}`;
+
 export function Cover({ record }: { record: Pick<VinylRecord, "added" | "title" | "artist" | "year"> }) {
   const { composition, colorway } = coverFor(record);
   const [fk, mk, sk] = COLORWAYS[colorway];
@@ -58,7 +61,7 @@ export function Cover({ record }: { record: Pick<VinylRecord, "added" | "title" 
           <circle cx={w} cy={88 + (d % 3) * 12} r="46" fill={s} />
         </>
       );
-      described = `a ${mn} block split by a ${sn} circle on ${fn}`;
+      described = `${a(mn)} block split by ${a(sn)} circle on ${fn}`;
       break;
     }
     case 1:
@@ -95,7 +98,7 @@ export function Cover({ record }: { record: Pick<VinylRecord, "added" | "title" 
           <rect x={cx === 0 ? 142 : 22} y={cy === 0 ? 142 : 22} width="36" height="36" fill={s} />
         </>
       );
-      described = `a ${mn} quarter circle and a small ${sn} square on ${fn}`;
+      described = `${a(mn)} quarter circle and a small ${sn} square on ${fn}`;
       break;
     }
     case 5:
@@ -115,7 +118,7 @@ export function Cover({ record }: { record: Pick<VinylRecord, "added" | "title" 
           <path d={`M${40 + d * 2} 124 A60 60 0 0 1 ${160 + d * 2} 124 Z`} fill={m} />
         </>
       );
-      described = `a ${mn} half disc on a ${sn} band over ${fn}`;
+      described = `${a(mn)} half disc on ${a(sn)} band over ${fn}`;
       break;
     default:
       shapes = (
@@ -124,7 +127,7 @@ export function Cover({ record }: { record: Pick<VinylRecord, "added" | "title" 
           <circle cx={58 + (d % 3) * 6} cy="58" r="26" fill={s} />
         </>
       );
-      described = `a ${mn} diagonal half and a ${sn} circle on ${fn}`;
+      described = `${a(mn)} diagonal half and ${a(sn)} circle on ${fn}`;
   }
 
   return (
