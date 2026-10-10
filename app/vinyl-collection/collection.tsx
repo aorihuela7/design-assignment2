@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Badge, Button, Chip, control, Field, join, Select, TextInput } from "../design-systems/_shared/ui";
+import { useMemo, useRef, useState, type RefObject } from "react";
+import { Badge, Button, Chip, CloseButton, control, Field, join, keepFocusInside, Select, TextInput } from "../design-systems/_shared/ui";
 import { Cover } from "./cover";
 import { GENRES, initialRecords, type Genre, type VinylRecord } from "./records";
 
@@ -54,6 +54,57 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
   );
 }
 
+/** Side panel on desktop, bottom sheet on mobile. A native modal dialog: Esc closes it and the page is inert. */
+const PANEL =
+  "m-0 mt-auto max-h-[85dvh] w-full max-w-none overflow-y-auto border-t-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-0 font-ds-body text-ds-body text-ds-text backdrop:bg-(--ds-backdrop) md:ml-auto md:mt-0 md:h-dvh md:max-h-dvh md:w-[28rem] md:border-l-(length:--ds-rule-w) md:border-t-0";
+
+function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | null; dialogRef: RefObject<HTMLDialogElement | null>; onClose: () => void }) {
+  const close = () => dialogRef.current?.close();
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="detail-title"
+      onKeyDown={keepFocusInside}
+      onClose={onClose}
+      onClick={(e) => e.target === dialogRef.current && close()}
+      className={PANEL}
+    >
+      {record && (
+        <div className="p-ds-24">
+          <div className="flex items-center justify-between gap-ds-16">
+            <p className={label}>{record.genre} · {record.pressing}</p>
+            <CloseButton onClick={close} />
+          </div>
+          <div className="mt-ds-12 max-w-[320px]">
+            <Cover record={record} label />
+          </div>
+          <h2 id="detail-title" className="mt-ds-16 ds-head text-ds-heading font-normal">
+            {record.title}
+          </h2>
+          <p>
+            {record.artist} · {record.year}
+          </p>
+          {record.note && <p className="mt-ds-12 text-ds-muted">{record.note}</p>}
+          <h3 className={`${label} mt-ds-24`}>Tracks</h3>
+          {record.tracks.length > 0 ? (
+            <ol className="mt-ds-8 divide-y divide-ds-border border-t border-ds-border">
+              {record.tracks.map((t, i) => (
+                <li key={t.title} className="flex items-baseline gap-ds-12 py-ds-8">
+                  <span className="w-6 ds-head">{i + 1}</span>
+                  <span className="flex-1">{t.title}</span>
+                  <span className="text-ds-muted">{t.length}</span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="mt-ds-8 text-ds-muted">No tracks listed yet.</p>
+          )}
+        </div>
+      )}
+    </dialog>
+  );
+}
+
 export default function Collection() {
   const [records] = useState<VinylRecord[]>(initialRecords);
   const [query, setQuery] = useState("");
@@ -70,6 +121,21 @@ export default function Collection() {
     () => (genre === "All" ? searched : searched.filter((r) => r.genre === genre)).toSorted(SORTS[sort].fn),
     [searched, genre, sort],
   );
+  // Detail panel: remember the card that opened it, and give focus back on close.
+  const [openId, setOpenId] = useState<string | null>(null);
+  const panelRef = useRef<HTMLDialogElement>(null);
+  const openerRef = useRef<HTMLButtonElement | null>(null);
+  const openRecord = records.find((r) => r.id === openId) ?? null;
+  const open = (el: HTMLButtonElement, id: string) => {
+    openerRef.current = el;
+    setOpenId(id);
+    panelRef.current?.showModal();
+  };
+  const onPanelClose = () => {
+    setOpenId(null);
+    openerRef.current?.focus();
+  };
+
   const clear = () => {
     setQuery("");
     setGenre("All");
@@ -126,7 +192,7 @@ export default function Collection() {
         <ul className="mt-ds-24 grid grid-cols-2 gap-ds-16 md:grid-cols-3 lg:grid-cols-4">
           {visible.map((r) => (
             <li key={r.id}>
-              <RecordCard record={r} selected={false} onOpen={() => {}} />
+              <RecordCard record={r} selected={openId === r.id} onOpen={(el) => open(el, r.id)} />
             </li>
           ))}
         </ul>
@@ -143,6 +209,8 @@ export default function Collection() {
           </div>
         </div>
       )}
+
+      <DetailPanel record={openRecord} dialogRef={panelRef} onClose={onPanelClose} />
     </>
   );
 }
