@@ -7,6 +7,8 @@ import LogModal, { type NewRecord } from "./log-modal";
 import { GENRES, initialRecords, metaOf, type Genre, type VinylRecord } from "./records";
 
 const label = "text-ds-label ds-label text-ds-muted";
+/** The metadata line: label face and weight in capitals, at 13px with tighter tracking so it stays on one line. */
+const meta = "text-[13px] leading-[18px] uppercase tracking-[0.08em] text-ds-muted [font-family:var(--ds-font-label)] [font-weight:var(--ds-label-weight)]";
 
 const SORTS = {
   added: { name: "Recently added", fn: (a: VinylRecord, b: VinylRecord) => b.added - a.added },
@@ -58,7 +60,7 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
           {record.artist}
         </span>
         <span className="mt-auto flex flex-wrap items-center gap-x-ds-8 gap-y-ds-4 pt-ds-8">
-          <span id={`${id}-meta`} className={label}>
+          <span id={`${id}-meta`} className={meta}>
             {metaOf(record)}
           </span>
           {record.isNew && <Badge>New</Badge>}
@@ -96,7 +98,7 @@ function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | nul
             {record.title}
           </h2>
           <p>{record.artist}</p>
-          <p className={`${label} mt-ds-8`}>{metaOf(record)}</p>
+          <p className={`${meta} mt-ds-8`}>{metaOf(record)}</p>
           {record.note && <p className="mt-ds-12 text-ds-muted">{record.note}</p>}
           <h3 className={`${label} mt-ds-24`}>Tracks</h3>
           {record.tracks.length > 0 ? (
