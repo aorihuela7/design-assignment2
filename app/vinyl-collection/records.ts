@@ -8,6 +8,7 @@ export type VinylRecord = {
   artist: string;
   year: number;
   genre: Genre;
+  /** Empty for records logged in the browser. */
   pressing: string;
   note: string;
   tracks: { title: string; length: string }[];

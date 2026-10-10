@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState, type RefObject } from "react";
 import { Badge, Button, Chip, CloseButton, control, Field, join, keepFocusInside, Select, TextInput } from "../design-systems/_shared/ui";
 import { Cover } from "./cover";
+import LogModal, { type NewRecord } from "./log-modal";
 import { GENRES, initialRecords, type Genre, type VinylRecord } from "./records";
 
 const label = "text-ds-label ds-label text-ds-muted";
@@ -44,7 +45,7 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
         <span className="text-ds-muted">{record.artist}</span>
         <span className="mt-auto flex flex-wrap items-center gap-x-ds-8 gap-y-ds-4 pt-ds-8">
           <span className={label}>
-            {record.year} · {record.genre} · {record.pressing}
+            {[record.year, record.genre, record.pressing].filter(Boolean).join(" · ")}
           </span>
           {record.isNew && <Badge>New</Badge>}
           {selected && <span className="text-ds-label ds-label">✓ Open</span>}
@@ -72,7 +73,7 @@ function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | nul
       {record && (
         <div className="p-ds-24">
           <div className="flex items-center justify-between gap-ds-16">
-            <p className={label}>{record.genre} · {record.pressing}</p>
+            <p className={label}>{[record.genre, record.pressing].filter(Boolean).join(" · ")}</p>
             <CloseButton onClick={close} />
           </div>
           <div className="mt-ds-12 max-w-[320px]">
@@ -106,7 +107,13 @@ function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | nul
 }
 
 export default function Collection() {
-  const [records] = useState<VinylRecord[]>(initialRecords);
+  const [records, setRecords] = useState<VinylRecord[]>(initialRecords);
+  // Logged records live in memory only; a reload brings back the original twelve.
+  const add = (r: NewRecord) =>
+    setRecords((rs) => [
+      { ...r, id: `logged-${rs.length}-${r.title}`, pressing: "", note: "", tracks: [], added: Math.max(...rs.map((x) => x.added)) + 1, isNew: true },
+      ...rs,
+    ]);
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState<Genre | "All">("All");
   const [sort, setSort] = useState<SortKey>("added");
@@ -150,7 +157,7 @@ export default function Collection() {
             {records.length} records
           </span>
         </h1>
-        <Button variant="primary">Log a record</Button>
+        <LogModal onAdd={add} />
       </header>
 
       <section aria-label="Find a record" className="mt-ds-24">

@@ -2,7 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import type { records } from "./records";
-import type { ButtonHTMLAttributes, InputHTMLAttributes, KeyboardEvent, ReactNode, SelectHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, KeyboardEvent, ReactNode, Ref, SelectHTMLAttributes } from "react";
 
 // The Calm control library. Every control styles its states with the st-* variants, which match the
 // real :hover / :focus-visible / :active / :disabled and also a data-state attribute. A labeled static
@@ -44,7 +44,7 @@ export function Button({
   className,
   children,
   ...props
-}: { variant?: keyof typeof BUTTON; state?: State; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) {
+}: { variant?: keyof typeof BUTTON; state?: State; children: ReactNode; ref?: Ref<HTMLButtonElement> } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const s = sample(state);
   return (
     <button
