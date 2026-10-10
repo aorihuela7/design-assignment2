@@ -45,7 +45,8 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
         <span className="text-ds-muted">{record.artist}</span>
         <span className="mt-auto flex flex-wrap items-center gap-x-ds-8 gap-y-ds-4 pt-ds-8">
           <span className={label}>
-            {[record.year, record.genre, record.pressing].filter(Boolean).join(" · ")}
+            {/* A non-breaking hyphen keeps "7-inch" on one line when the label wraps. */}
+            {[record.year, record.genre, record.pressing].filter(Boolean).join(" · ").replaceAll("-", "\u2011")}
           </span>
           {record.isNew && <Badge>New</Badge>}
           {selected && <span className="text-ds-label ds-label">✓ Open</span>}
