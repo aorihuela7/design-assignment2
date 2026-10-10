@@ -39,12 +39,20 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
       className={join(
         "group flex h-full w-full flex-col border-(length:--ds-rule-w) border-ds-rule bg-ds-surface text-left st-hover:bg-ds-bg st-press:translate-y-px st-selected:bg-ds-bg",
         control,
+        // Hover and the open card: a 1px outline flush with the border reads as a thicker border, without moving
+        // anything. Keyboard focus keeps the design system ring (2px ink, offset 2px).
+        "st-hover:outline-1 st-hover:outline-offset-0 st-hover:outline-ds-rule st-hover:[outline-style:solid] st-focus:outline-offset-2 st-selected:outline-1 st-selected:outline-offset-0 st-selected:outline-ds-rule st-selected:[outline-style:solid]",
       )}
     >
       <Cover record={record} />
       <span className="flex flex-1 flex-col gap-ds-4 border-t border-ds-border p-ds-12">
-        <span id={`${id}-title`} className="ds-head text-xl group-st-hover:underline group-st-hover:decoration-2 group-st-hover:underline-offset-4">
-          {record.title}
+        <span className="flex items-baseline justify-between gap-ds-8">
+          <span id={`${id}-title`} className="ds-head text-xl group-st-hover:underline group-st-hover:decoration-2 group-st-hover:underline-offset-4">
+            {record.title}
+          </span>
+          <svg viewBox="0 0 16 12" className="h-3 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+            <path d="M1 6h13M9 1l5 5-5 5" />
+          </svg>
         </span>
         <span id={`${id}-artist`} className="text-ds-muted">
           {record.artist}
