@@ -192,25 +192,13 @@ export default function Collection() {
       </header>
 
       <section aria-label="Find a record" className="mt-ds-24">
-        <div className="flex flex-col gap-ds-16 md:flex-row md:items-end">
-          <div className="md:w-96">
-            <Field label="Search">
-              <TextInput enterKeyHint="search" placeholder="Title or artist" value={query} onChange={(e) => setQuery(e.target.value)} />
-            </Field>
-          </div>
-          <div className="md:ml-auto md:w-60">
-            <Field label="Sort">
-              <Select value={sort} onChange={(e) => setSort(e.target.value as SortKey)}>
-                {Object.entries(SORTS).map(([k, v]) => (
-                  <option key={k} value={k}>
-                    {v.name}
-                  </option>
-                ))}
-              </Select>
-            </Field>
-          </div>
+        {/* Full width on small screens, so it shares edges with Sort; a narrower field from 640px up. */}
+        <div className="sm:max-w-80">
+          <Field label="Search">
+            <TextInput enterKeyHint="search" placeholder="Title or artist" value={query} onChange={(e) => setQuery(e.target.value)} />
+          </Field>
         </div>
-        <div className="mt-ds-16 flex flex-wrap items-center justify-between gap-ds-12">
+        <div className="mt-ds-16 flex flex-wrap items-end justify-between gap-ds-16">
           <div role="group" aria-label="Genre" className="flex flex-wrap gap-ds-8">
             {(["All", ...GENRES] as const).map((g) => (
               <Chip
@@ -226,11 +214,23 @@ export default function Collection() {
               </Chip>
             ))}
           </div>
-          {/* Only while a search or filter narrows the list. The live region stays, so changes are announced. */}
-          <p className={label} aria-live="polite">
-            {filtering && `Showing ${visible.length} of ${records.length}`}
-          </p>
+          {/* Right-aligned on the chips' line; on narrow screens it drops below them at full width. */}
+          <div className="w-full sm:ml-auto sm:w-60">
+            <Field label="Sort">
+              <Select value={sort} onChange={(e) => setSort(e.target.value as SortKey)}>
+                {Object.entries(SORTS).map(([k, v]) => (
+                  <option key={k} value={k}>
+                    {v.name}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+          </div>
         </div>
+        {/* Only while a search or filter narrows the list. The live region stays, so changes are announced. */}
+        <p className={filtering ? `${label} mt-ds-12` : "sr-only"} aria-live="polite">
+          {filtering && `Showing ${visible.length} of ${records.length}`}
+        </p>
       </section>
 
       {visible.length > 0 ? (
