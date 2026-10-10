@@ -162,6 +162,8 @@ export default function Collection() {
     openerRef.current?.focus();
   };
 
+  const filtering = query.trim() !== "" || genre !== "All";
+
   const clear = () => {
     setQuery("");
     setGenre("All");
@@ -214,8 +216,9 @@ export default function Collection() {
               </Chip>
             ))}
           </div>
+          {/* Only while a search or filter narrows the list. The live region stays, so changes are announced. */}
           <p className={label} aria-live="polite">
-            Showing {visible.length} of {records.length}
+            {filtering && `Showing ${visible.length} of ${records.length}`}
           </p>
         </div>
       </section>
