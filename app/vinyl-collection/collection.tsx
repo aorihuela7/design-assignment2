@@ -126,7 +126,7 @@ export default function Collection() {
   const [genre, setGenre] = useState<Genre | "All">("All");
   const [sort, setSort] = useState<SortKey>("added");
 
-  // Logged records live in memory only; a reload brings back the original twelve. After saving, clear the
+  // Logged records live in memory only; a reload brings back the sample collection. After saving, clear the
   // search and filters and sort by Recently added, so the new record is first, and show a brief "Saved".
   const [saved, setSaved] = useState<string | null>(null);
   const savedTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
