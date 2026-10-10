@@ -1,94 +1,136 @@
 import { editorial } from "../design-systems/editorial/theme";
 import type { VinylRecord } from "./records";
 
-// Original Editorial covers drawn from each record's own data: one of four compositions picked by a
-// hash of its id, set with its title and artist. Ink and paper only; the accent stays on the primary action.
+// Original Editorial covers drawn from each record's own data. Purely graphic: the title and artist live
+// next to the cover as real text. The red-orange accent is never used here; it belongs to the primary action.
 
 const p = editorial.palette;
 
-/** FNV-1a: a small, well-mixed hash so the four compositions spread across the collection. */
-function hash(s: string) {
-  let h = 2166136261;
-  for (const ch of `cover${s}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
-  return h;
+/** Cover inks: Editorial palette colors only. Deep blue is the Editorial mood board's second ink (--color-navy). */
+const INK = {
+  ink: { hex: p.text, name: "ink" },
+  paper: { hex: p.bg, name: "paper" },
+  sand: { hex: p.border, name: "sand" },
+  blue: { hex: "#1E3A6B", name: "deep blue" },
+  olive: { hex: p.muted, name: "olive" },
+} as const;
+type Ink = keyof typeof INK;
+
+/** Field, main shape, second shape. */
+const COLORWAYS: [Ink, Ink, Ink][] = [
+  ["paper", "ink", "sand"],
+  ["ink", "paper", "blue"],
+  ["sand", "ink", "paper"],
+  ["blue", "paper", "ink"],
+  ["paper", "blue", "ink"],
+  ["olive", "paper", "sand"],
+  ["ink", "sand", "paper"],
+];
+
+const COMPOSITIONS = 8;
+
+/**
+ * Both choices come from the order the record was added (its `added` number), so they hold for logged records too:
+ * - Composition steps by 3 out of 8, so records next to each other in the default grid (side by side, above and
+ *   below, diagonal, at 2, 3, or 4 columns) never share one.
+ * - Colorway steps by 5 out of 7. Records that share a composition are 8 apart, so they always get different
+ *   colorways: no two of the first 56 records look the same.
+ */
+export function coverFor(record: Pick<VinylRecord, "added">) {
+  return { composition: (record.added * 3) % COMPOSITIONS, colorway: (record.added * 5) % COLORWAYS.length };
 }
 
-/** Split a title into at most two lines and pick a size that fits the width. */
-function lines(title: string, width: number, max: number) {
-  const words = title.toUpperCase().split(" ");
-  let rows = [words.join(" ")];
-  if (words.length > 1) {
-    let best = 1;
-    let bestLen = Infinity;
-    for (let i = 1; i < words.length; i++) {
-      const len = Math.max(words.slice(0, i).join(" ").length, words.slice(i).join(" ").length);
-      if (len < bestLen) [best, bestLen] = [i, len];
+export function Cover({ record }: { record: Pick<VinylRecord, "added" | "title" | "artist" | "year"> }) {
+  const { composition, colorway } = coverFor(record);
+  const [fk, mk, sk] = COLORWAYS[colorway];
+  const [f, m, s] = [INK[fk].hex, INK[mk].hex, INK[sk].hex];
+  const [fn, mn, sn] = [INK[fk].name, INK[mk].name, INK[sk].name];
+  const d = record.year % 10; // A little geometry from the year, so covers sharing a composition still differ.
+
+  let shapes;
+  let described;
+  switch (composition) {
+    case 0: {
+      const w = 56 + (d % 4) * 8;
+      shapes = (
+        <>
+          <rect width={w} height="200" fill={m} />
+          <circle cx={w} cy={88 + (d % 3) * 12} r="46" fill={s} />
+        </>
+      );
+      described = `a ${mn} block split by a ${sn} circle on ${fn}`;
+      break;
     }
-    rows = [words.slice(0, best).join(" "), words.slice(best).join(" ")];
+    case 1:
+      shapes = <circle cx={88 + (d % 5) * 6} cy="100" r="70" fill={m} />;
+      described = `a large ${mn} circle on ${fn}`;
+      break;
+    case 2:
+      shapes = (
+        <>
+          <rect x="25" y="25" width="150" height="150" fill={m} />
+          <rect x="52" y="52" width="96" height="96" fill={s} />
+          <rect x={78 + (d % 3) * 4} y="78" width="44" height="44" fill={f} />
+        </>
+      );
+      described = `concentric ${mn} and ${sn} squares on ${fn}`;
+      break;
+    case 3:
+      shapes = (
+        <>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <rect key={i} x="0" y={20 + i * 34} width="200" height={6 + ((d + i * 3) % 5) * 4} fill={i === 2 ? s : m} />
+          ))}
+        </>
+      );
+      described = `horizontal ${mn} bars with one ${sn} bar on ${fn}`;
+      break;
+    case 4: {
+      const corner = d % 4;
+      const cx = corner === 1 || corner === 2 ? 200 : 0;
+      const cy = corner >= 2 ? 200 : 0;
+      shapes = (
+        <>
+          <circle cx={cx} cy={cy} r="150" fill={m} />
+          <rect x={cx === 0 ? 142 : 22} y={cy === 0 ? 142 : 22} width="36" height="36" fill={s} />
+        </>
+      );
+      described = `a ${mn} quarter circle and a small ${sn} square on ${fn}`;
+      break;
+    }
+    case 5:
+      shapes = (
+        <>
+          <rect x="20" y="132" width="160" height="48" fill={m} />
+          <rect x="20" y={84} width={112 + (d % 3) * 8} height="48" fill={s} />
+          <rect x="20" y="36" width={64 + (d % 4) * 8} height="48" fill={m} />
+        </>
+      );
+      described = `stacked ${mn} and ${sn} blocks on ${fn}`;
+      break;
+    case 6:
+      shapes = (
+        <>
+          <rect x="0" y="124" width="200" height="18" fill={s} />
+          <path d={`M${40 + d * 2} 124 A60 60 0 0 1 ${160 + d * 2} 124 Z`} fill={m} />
+        </>
+      );
+      described = `a ${mn} half disc on a ${sn} band over ${fn}`;
+      break;
+    default:
+      shapes = (
+        <>
+          <polygon points="0,200 200,0 200,200" fill={m} />
+          <circle cx={58 + (d % 3) * 6} cy="58" r="26" fill={s} />
+        </>
+      );
+      described = `a ${mn} diagonal half and a ${sn} circle on ${fn}`;
   }
-  const longest = Math.max(...rows.map((r) => r.length));
-  return { rows, size: Math.min(max, width / (longest * 0.5)) };
-}
-
-const HEAD = { fontFamily: "var(--ds-font-head)" };
-const PLAIN = { fontFamily: "var(--ds-font-body)", fontWeight: 700, letterSpacing: 1.5 };
-
-function Title({ title, x, y, width, max, fill, anchor = "start" }: { title: string; x: number; y: number; width: number; max: number; fill: string; anchor?: "start" | "end" }) {
-  const { rows, size } = lines(title, width, max);
-  return (
-    <text x={x} y={y - (rows.length - 1) * size * 0.92} fill={fill} fontSize={size} textAnchor={anchor} style={HEAD}>
-      {rows.map((r, i) => (
-        <tspan key={i} x={x} dy={i === 0 ? 0 : size * 0.92}>
-          {r}
-        </tspan>
-      ))}
-    </text>
-  );
-}
-
-export function Cover({ record, label }: { record: Pick<VinylRecord, "id" | "title" | "artist">; label?: boolean }) {
-  const h = hash(record.id);
-  const variant = h % 4;
-  const artist = record.artist.toUpperCase();
-  const a11y = label ? { role: "img", "aria-label": `Cover of ${record.title}` } : { "aria-hidden": true };
 
   return (
-    <svg viewBox="0 0 200 200" className="block h-auto w-full" {...a11y}>
-      {variant === 0 && (
-        <>
-          <rect width="200" height="200" fill={p.text} />
-          <circle cx={56 + (h % 50)} cy="74" r="44" fill={p.bg} />
-          <Title title={record.title} x={14} y={180} width={172} max={30} fill={p.bg} />
-          <text x="186" y="18" textAnchor="end" fill={p.bg} fontSize="8" style={PLAIN}>{artist}</text>
-        </>
-      )}
-      {variant === 1 && (
-        <>
-          <rect width="200" height="200" fill={p.bg} />
-          <rect width="64" height="200" fill={p.text} />
-          <path d="M64 32 A44 44 0 0 1 64 120 Z" fill={p.border} />
-          <Title title={record.title} x={186} y={182} width={110} max={30} fill={p.text} anchor="end" />
-          <text x="186" y="18" textAnchor="end" fill={p.text} fontSize="8" style={PLAIN}>{artist}</text>
-        </>
-      )}
-      {variant === 2 && (
-        <>
-          <rect width="200" height="200" fill={p.border} />
-          <rect x="24" y="28" width="104" height="104" fill={p.bg} />
-          <rect x={44 + (h % 16)} y="48" width="56" height="56" fill={p.text} />
-          <Title title={record.title} x={14} y={187} width={172} max={26} fill={p.text} />
-          <text x="186" y="18" textAnchor="end" fill={p.text} fontSize="8" style={PLAIN}>{artist}</text>
-        </>
-      )}
-      {variant === 3 && (
-        <>
-          <rect width="200" height="200" fill={p.bg} />
-          <rect x="14" y="16" width="172" height="8" fill={p.text} />
-          <Title title={record.title} x={14} y={124} width={172} max={46} fill={p.text} />
-          <rect x="14" y="160" width="172" height="2" fill={p.text} />
-          <text x="14" y="180" fill={p.text} fontSize="8" style={PLAIN}>{artist}</text>
-        </>
-      )}
+    <svg viewBox="0 0 200 200" className="block h-auto w-full" role="img" aria-label={`Cover of ${record.title}: ${described}`}>
+      <rect width="200" height="200" fill={f} />
+      {shapes}
       <rect x="0.5" y="0.5" width="199" height="199" fill="none" stroke={p.border} />
     </svg>
   );

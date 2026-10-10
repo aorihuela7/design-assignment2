@@ -28,10 +28,12 @@ function EmptyIcon() {
 
 /** A record card. The whole card is a button that opens the detail panel. */
 function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selected: boolean; onOpen: (el: HTMLButtonElement) => void }) {
+  const id = `card-${record.id}`;
   return (
     <button
       type="button"
       aria-haspopup="dialog"
+      aria-labelledby={`${id}-title ${id}-artist ${id}-meta`}
       aria-current={selected ? "true" : undefined}
       onClick={(e) => onOpen(e.currentTarget)}
       className={join(
@@ -41,10 +43,14 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
     >
       <Cover record={record} />
       <span className="flex flex-1 flex-col gap-ds-4 border-t border-ds-border p-ds-12">
-        <span className="ds-head text-xl group-st-hover:underline group-st-hover:decoration-2 group-st-hover:underline-offset-4">{record.title}</span>
-        <span className="text-ds-muted">{record.artist}</span>
+        <span id={`${id}-title`} className="ds-head text-xl group-st-hover:underline group-st-hover:decoration-2 group-st-hover:underline-offset-4">
+          {record.title}
+        </span>
+        <span id={`${id}-artist`} className="text-ds-muted">
+          {record.artist}
+        </span>
         <span className="mt-auto flex flex-wrap items-center gap-x-ds-8 gap-y-ds-4 pt-ds-8">
-          <span className={label}>
+          <span id={`${id}-meta`} className={label}>
             {/* A non-breaking hyphen keeps "7-inch" on one line when the label wraps. */}
             {[record.year, record.genre, record.pressing].filter(Boolean).join(" · ").replaceAll("-", "\u2011")}
           </span>
@@ -73,19 +79,17 @@ function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | nul
     >
       {record && (
         <div className="p-ds-24">
-          <div className="flex items-center justify-between gap-ds-16">
-            <p className={label}>{[record.genre, record.pressing].filter(Boolean).join(" · ")}</p>
+          <div className="flex justify-end">
             <CloseButton onClick={close} />
           </div>
-          <div className="mt-ds-12 max-w-[320px]">
-            <Cover record={record} label />
+          <div className="mt-ds-8">
+            <Cover record={record} />
           </div>
           <h2 id="detail-title" className="mt-ds-16 ds-head text-ds-heading font-normal">
             {record.title}
           </h2>
-          <p>
-            {record.artist} · {record.year}
-          </p>
+          <p>{record.artist}</p>
+          <p className={`${label} mt-ds-8`}>{[record.year, record.genre, record.pressing].filter(Boolean).join(" · ")}</p>
           {record.note && <p className="mt-ds-12 text-ds-muted">{record.note}</p>}
           <h3 className={`${label} mt-ds-24`}>Tracks</h3>
           {record.tracks.length > 0 ? (
