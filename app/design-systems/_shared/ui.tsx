@@ -21,11 +21,11 @@ function sample(state?: State) {
   };
 }
 
-const focusRing = "outline-offset-2 st-focus:outline-2 st-focus:outline-ds-text";
-const fade = "transition-[color,background-color,border-color,transform] duration-(--ds-duration) ease-out motion-reduce:transition-none";
-const control = `${focusRing} ${fade}`;
+export const focusRing = "outline-offset-2 st-focus:outline-2 st-focus:outline-ds-text";
+export const fade = "transition-[color,background-color,border-color,transform] duration-(--ds-duration) ease-out motion-reduce:transition-none";
+export const control = `${focusRing} ${fade}`;
 
-function join(...parts: (string | undefined | false)[]) {
+export function join(...parts: (string | undefined | false)[]) {
   return parts.filter(Boolean).join(" ");
 }
 
@@ -303,11 +303,11 @@ export function Badge({ children, mark }: { children: ReactNode; mark?: string }
 
 /* Dialogs: native <dialog>, so focus is trapped, Esc closes it, and focus returns to the opener. */
 
-const DIALOG =
+export const DIALOG =
   "m-auto w-[min(92vw,28rem)] rounded-ds-12 border-(length:--ds-rule-w) border-ds-rule bg-ds-surface p-0 font-ds-body text-ds-body text-ds-text backdrop:bg-(--ds-backdrop)";
 
 /** Native showModal() makes the page inert, but Tab can still leave for the browser UI. Wrap it. */
-function keepFocusInside(e: KeyboardEvent<HTMLDialogElement>) {
+export function keepFocusInside(e: KeyboardEvent<HTMLDialogElement>) {
   if (e.key !== "Tab") return;
   const items = [...e.currentTarget.querySelectorAll<HTMLElement>("button, input, select, textarea, a[href]")].filter((el) => !el.hasAttribute("disabled"));
   if (items.length === 0) return;
@@ -322,7 +322,7 @@ function keepFocusInside(e: KeyboardEvent<HTMLDialogElement>) {
   }
 }
 
-function CloseButton({ onClick }: { onClick: () => void }) {
+export function CloseButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
