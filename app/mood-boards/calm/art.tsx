@@ -1,13 +1,32 @@
 // Calm artifacts drawn in SVG/CSS. Flat fills and 1px lines only: no gradients, no shadows.
+// Every color comes from the Calm theme tokens, the same ones /design-systems/calm uses.
 
+import { mix } from "../../design-systems/_shared/theme";
+import { calm, calmDecorative } from "../../design-systems/calm/theme";
+
+const p = calm.palette;
 const C = {
-  oat: "#f3ede2",
-  surface: "#fbf8f2",
-  sand: "#d9cbb0",
-  clay: "#a8654a",
-  moss: "#44603f",
-  ink: "#2b2722",
-  line: "#d8cfbf",
+  oat: p.bg,
+  surface: p.surface,
+  sand: p.border,
+  moss: p.accent,
+  ink: p.text,
+  line: p.border,
+  clay: calmDecorative.clay,
+  honey: calmDecorative.honey,
+};
+
+/** feColorMatrix that turns noise into a flat color at the given strength. */
+function noise(hex: string, gain: number, cut: number) {
+  const n = parseInt(hex.slice(1), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => (v / 255).toFixed(3));
+  return `0 0 0 0 ${r}  0 0 0 0 ${g}  0 0 0 0 ${b}  0 0 0 ${gain} ${-cut}`;
+}
+
+const TEX = {
+  linen: { base: mix(p.bg, p.border, 0.5), thread: mix(p.border, p.muted, 0.45) },
+  plaster: { base: mix(p.border, p.muted, 0.2), grain: mix(p.muted, C.clay, 0.25) },
+  ceramic: { base: mix(p.border, C.clay, 0.22), grain: mix(C.clay, p.text, 0.35) },
 };
 
 function Grooves({ cx, cy, from, to }: { cx: number; cy: number; from: number; to: number }) {
@@ -24,6 +43,7 @@ export function Record({ size = 120 }: { size?: number }) {
       <circle cx="60" cy="60" r="58" fill={C.ink} />
       <Grooves cx={60} cy={60} from={24} to={54} />
       <circle cx="60" cy="60" r="19" fill={C.clay} />
+      <circle cx="60" cy="60" r="16" fill="none" stroke={C.honey} strokeWidth="1" />
       <circle cx="60" cy="60" r="2.5" fill={C.oat} />
     </svg>
   );
@@ -110,9 +130,9 @@ export function Texture({ kind }: { kind: "linen" | "plaster" | "ceramic" }) {
       <svg className="h-full min-h-32 w-full" role="img" aria-label="Matte linen texture">
         <defs>
           <pattern id={id} width="6" height="6" patternUnits="userSpaceOnUse">
-            <rect width="6" height="6" fill="#e6dccb" />
-            <path d="M0 1.5H6M0 4.5H6" stroke="#b9ab94" strokeWidth="0.6" strokeOpacity="0.7" />
-            <path d="M1.5 0V6M4.5 0V6" stroke="#b9ab94" strokeWidth="0.6" strokeOpacity="0.45" />
+            <rect width="6" height="6" fill={TEX.linen.base} />
+            <path d="M0 1.5H6M0 4.5H6" stroke={TEX.linen.thread} strokeWidth="0.6" strokeOpacity="0.7" />
+            <path d="M1.5 0V6M4.5 0V6" stroke={TEX.linen.thread} strokeWidth="0.6" strokeOpacity="0.45" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill={`url(#${id})`} />
@@ -125,10 +145,10 @@ export function Texture({ kind }: { kind: "linen" | "plaster" | "ceramic" }) {
       <defs>
         <filter id={id} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency={plaster ? 0.012 : 0.9} numOctaves={plaster ? 3 : 2} seed={plaster ? 4 : 9} />
-          <feColorMatrix values={plaster ? "0 0 0 0 0.35  0 0 0 0 0.27  0 0 0 0 0.3  0 0 0 1.1 -0.35" : "0 0 0 0 0.45  0 0 0 0 0.33  0 0 0 0 0.24  0 0 0 1.4 -0.45"} />
+          <feColorMatrix values={plaster ? noise(TEX.plaster.grain, 1.1, 0.35) : noise(TEX.ceramic.grain, 1.4, 0.45)} />
         </filter>
       </defs>
-      <rect width="100%" height="100%" fill={plaster ? "#c9b8a6" : "#d6c3a6"} />
+      <rect width="100%" height="100%" fill={plaster ? TEX.plaster.base : TEX.ceramic.base} />
       <rect width="100%" height="100%" filter={`url(#${id})`} />
     </svg>
   );
@@ -144,7 +164,7 @@ export function Stylus() {
       <path d="M199 34 L130 54 L106 66" fill="none" stroke={C.ink} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
       <rect x="86" y="64" width="26" height="12" rx="2" transform="rotate(-20 99 70)" fill={C.ink} />
       <path d="M94 76 L90 91" stroke={C.ink} strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="90" cy="91.5" r="1.5" fill={C.clay} />
+      <circle cx="90" cy="91.5" r="1.5" fill={C.honey} />
     </svg>
   );
 }

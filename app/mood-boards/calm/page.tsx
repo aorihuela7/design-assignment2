@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { CSSProperties, ReactNode } from "react";
 import HubLink from "../../hub-link";
+import { calm, calmDecorative } from "../../design-systems/calm/theme";
 import { GrooveDetail, Label, Record, Sleeve, Stylus, Texture, Tonearm, Turntable } from "./art";
 
 export const metadata: Metadata = { title: "Calm · Matte · Warm — Mood Board" };
@@ -19,16 +20,41 @@ type Artifact = {
   node: ReactNode;
 };
 
-const swatch = (name: string, hex: string, ref: string): Artifact => ({
+const p = calm.palette;
+
+// The Calm palette as the mood board names it. Values come from the Calm theme tokens.
+const PALETTE = [
+  { name: "Oat", hex: p.bg, light: false },
+  { name: "Sand", hex: p.border, light: false },
+  { name: "Clay", hex: calmDecorative.clay, light: true },
+  { name: "Honey", hex: calmDecorative.honey, light: false },
+  { name: "Moss", hex: p.accent, light: true },
+  { name: "Ink", hex: p.text, light: true },
+];
+const hexOf = (name: string) => PALETTE.find((c) => c.name === name)!.hex;
+
+// Maps the theme onto the color names this page's classes use (bg-oat, text-ink, ...), on this page only.
+const themeVars = {
+  "--color-oat": p.bg,
+  "--color-surface": p.surface,
+  "--color-ink": p.text,
+  "--color-muted": p.muted,
+  "--color-line": p.border,
+  "--color-sand": p.border,
+  "--color-moss": p.accent,
+  "--color-clay": calmDecorative.clay,
+} as CSSProperties;
+
+const swatch = (name: string, ref: string): Artifact => ({
   name,
   size: "s",
   ref,
   bare: true,
   node: (
-    <div className="flex h-full min-h-24 items-end p-3" style={{ background: hex }}>
-      <p className={`text-sm ${name === "Ink" || name === "Moss" || name === "Clay" ? "text-surface" : "text-ink"}`}>
+    <div className="flex h-full min-h-24 items-end border-b border-line p-3" style={{ background: hexOf(name) }}>
+      <p className={`text-sm ${PALETTE.find((c) => c.name === name)!.light ? "text-surface" : "text-ink"}`}>
         {name}
-        <span className="block text-xs">{hex}</span>
+        <span className="block text-xs">{hexOf(name).toUpperCase()}</span>
       </p>
     </div>
   ),
@@ -38,11 +64,12 @@ const row = "flex items-center gap-3 text-sm";
 const chip = "rounded-full border border-line px-3 py-1 text-sm";
 
 const ARTIFACTS: Artifact[] = [
-  swatch("Oat", "#F3EDE2", "Undyed paper sleeves, the page behind everything."),
-  swatch("Sand", "#D9CBB0", "A worn cardboard jacket in lamplight."),
-  swatch("Clay", "#A8654A", "The centre label of an old pressing."),
-  swatch("Moss", "#44603F", "One quiet green, kept for the primary action."),
-  swatch("Ink", "#2B2722", "Vinyl in a dim room, and the text on it."),
+  swatch("Oat", "Undyed paper sleeves, the page behind everything."),
+  swatch("Sand", "A worn cardboard jacket in lamplight."),
+  swatch("Clay", "The centre label of an old pressing. Decorative only."),
+  swatch("Honey", "A lamp's warm spot on the wall. Decorative only."),
+  swatch("Moss", "One quiet green, kept for the primary action."),
+  swatch("Ink", "Vinyl in a dim room, and the text on it."),
   {
     name: "Record title",
     size: "m",
@@ -135,7 +162,7 @@ const ARTIFACTS: Artifact[] = [
   },
   {
     name: "Grooves",
-    size: "l",
+    size: "m",
     ref: "Fine lines catching a little light.",
     bare: true,
     node: <GrooveDetail />,
@@ -263,7 +290,8 @@ const hubTheme = {
 
 export default function CalmMoodBoard() {
   return (
-    <main style={hubTheme} className="mx-auto max-w-[1440px] px-5 pb-16 pt-6 md:px-10 md:pt-10">
+    <div style={{ ...themeVars, ...hubTheme }} className="min-h-screen bg-oat font-sans text-ink">
+    <main className="mx-auto max-w-[1440px] px-5 pb-16 pt-6 md:px-10 md:pt-10">
       <HubLink className="mb-6 md:mb-10" />
       <header className="mb-12 md:mb-16">
         <p className="text-xs uppercase tracking-widest text-muted">Mood board · 1 of 3</p>
@@ -281,20 +309,14 @@ export default function CalmMoodBoard() {
         <div>
           <p className="text-xs uppercase tracking-widest text-muted">Early decisions · Palette</p>
           <ul className="mt-3 flex flex-wrap gap-4">
-            {[
-              ["Oat", "#F3EDE2"],
-              ["Sand", "#D9CBB0"],
-              ["Clay", "#A8654A"],
-              ["Moss", "#44603F"],
-              ["Ink", "#2B2722"],
-            ].map(([n, h]) => (
-              <li key={n} className="flex items-center gap-2 text-sm">
-                <span className="h-5 w-5 rounded-full border border-line" style={{ background: h }} aria-hidden />
-                {n}
+            {PALETTE.map((c) => (
+              <li key={c.name} className="flex items-center gap-2 text-sm">
+                <span className="h-5 w-5 rounded-full border border-line" style={{ background: c.hex }} aria-hidden />
+                {c.name}
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-sm text-muted">Moss only for the primary action.</p>
+          <p className="mt-2 text-sm text-muted">Moss only for the primary action. Clay and Honey are decorative.</p>
         </div>
       </section>
 
@@ -314,5 +336,6 @@ export default function CalmMoodBoard() {
         ))}
       </ul>
     </main>
+    </div>
   );
 }
