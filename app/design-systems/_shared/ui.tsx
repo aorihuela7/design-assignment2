@@ -128,7 +128,7 @@ export function Checkbox({ label, state, hideLabel, ...props }: { label: string;
     <label className={join("inline-flex min-h-11 items-center gap-ds-12", state === "disabled" && "text-ds-muted")}>
       <input
         type="checkbox"
-        defaultChecked={state === "selected"}
+        defaultChecked={state ? state === "selected" : undefined}
         {...props}
         {...s}
         className={join(
@@ -149,7 +149,7 @@ export function Radio({ label, state, hideLabel, ...props }: { label: string; st
     <label className={join("inline-flex min-h-11 items-center gap-ds-12", state === "disabled" && "text-ds-muted")}>
       <input
         type="radio"
-        defaultChecked={state === "selected"}
+        defaultChecked={state ? state === "selected" : undefined}
         {...props}
         {...s}
         className={join(

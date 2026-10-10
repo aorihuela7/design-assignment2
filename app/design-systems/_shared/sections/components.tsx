@@ -58,10 +58,10 @@ export default function Components({
               <Checkbox label="Mono pressing" />
             </div>
             <fieldset className="flex flex-wrap gap-x-ds-24">
-              <legend className="sr-only">Format</legend>
-              <Radio name="format" label="LP" defaultChecked />
-              <Radio name="format" label="EP" />
-              <Radio name="format" label="7-inch" />
+              <legend className="sr-only">Type</legend>
+              <Radio name="type" label="LP" defaultChecked />
+              <Radio name="type" label="EP" />
+              <Radio name="type" label="Single" />
             </fieldset>
             <Toggle label="New arrivals" defaultOn />
           </div>

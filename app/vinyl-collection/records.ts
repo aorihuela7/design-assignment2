@@ -1,6 +1,8 @@
 // The collection: invented records only (no real albums, bands, or covers). Nothing is saved.
 
 export type Genre = "Jazz" | "Rock" | "Soul";
+export type RecordType = "LP" | "EP" | "Single";
+export type RecordSize = '12"' | '10"' | '7"';
 
 export type VinylRecord = {
   id: string;
@@ -8,8 +10,9 @@ export type VinylRecord = {
   artist: string;
   year: number;
   genre: Genre;
-  /** Empty for records logged in the browser. */
-  pressing: string;
+  /** The format is always exactly these two fields. */
+  type: RecordType;
+  size: RecordSize;
   note: string;
   tracks: { title: string; length: string }[];
   /** Order the record was added; higher is newer. */
@@ -18,6 +21,14 @@ export type VinylRecord = {
 };
 
 export const GENRES: Genre[] = ["Jazz", "Rock", "Soul"];
+export const TYPES: RecordType[] = ["LP", "EP", "Single"];
+export const SIZES: RecordSize[] = ['12"', '10"', '7"'];
+
+/** The one way a format is written: TYPE · SIZE. */
+export const formatOf = (r: Pick<VinylRecord, "type" | "size">) => `${r.type} · ${r.size}`;
+
+/** The one metadata line, in a fixed order: YEAR · GENRE · TYPE · SIZE. */
+export const metaOf = (r: Pick<VinylRecord, "year" | "genre" | "type" | "size">) => `${r.year} · ${r.genre} · ${formatOf(r)}`;
 
 export const initialRecords: VinylRecord[] = [
   {
@@ -26,7 +37,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "Ines Calder Trio",
     year: 1961,
     genre: "Jazz",
-    pressing: "LP · Mono",
+    type: "LP",
+    size: '12"',
     note: "Brushes on the snare, one long piano solo. Best after midnight.",
     tracks: [
       { title: "Low Lamp", length: "6:12" },
@@ -42,7 +54,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "Wren & Co.",
     year: 1978,
     genre: "Rock",
-    pressing: "LP",
+    type: "LP",
+    size: '12"',
     note: "Two guitars, a borrowed organ, and a chorus you hum for days.",
     tracks: [
       { title: "Harbor Light", length: "3:58" },
@@ -59,8 +72,9 @@ export const initialRecords: VinylRecord[] = [
     artist: "Tomas Reyes",
     year: 1966,
     genre: "Soul",
-    pressing: "7-inch · 45 rpm",
-    note: "A single with a horn line on the A side and a slow burner on the B.",
+    type: "EP",
+    size: '7"',
+    note: "Four songs on a small record: a horn line on side A, a slow burner on side B.",
     tracks: [
       { title: "Salt Air", length: "2:48" },
       { title: "Keep the Porch Light On", length: "3:10" },
@@ -75,7 +89,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "Mara Voss Quintet",
     year: 1974,
     genre: "Jazz",
-    pressing: "LP · Gatefold",
+    type: "LP",
+    size: '12"',
     note: "Recorded live in one night. The crowd noise is part of it.",
     tracks: [
       { title: "Opening Set", length: "8:02" },
@@ -92,7 +107,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "The Night Drivers",
     year: 1985,
     genre: "Rock",
-    pressing: "LP",
+    type: "LP",
+    size: '12"',
     note: "Drum machines and a guitar turned all the way up. Car-stereo loud.",
     tracks: [
       { title: "Late Drive", length: "4:02" },
@@ -110,7 +126,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "Della Price",
     year: 1969,
     genre: "Soul",
-    pressing: "LP",
+    type: "LP",
+    size: '12"',
     note: "A big voice over a tight rhythm section. The B side is the keeper.",
     tracks: [
       { title: "Hot Pavement", length: "3:05" },
@@ -126,7 +143,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "Otto Lind Quartet",
     year: 1959,
     genre: "Jazz",
-    pressing: "LP · Mono",
+    type: "LP",
+    size: '10"',
     note: "Odd meters that somehow swing. Worn copy, plays clean.",
     tracks: [
       { title: "Square Root", length: "5:47" },
@@ -143,7 +161,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "The Velvet Signals",
     year: 1971,
     genre: "Soul",
-    pressing: "LP",
+    type: "LP",
+    size: '12"',
     note: "Four voices, one microphone, and strings that arrive late.",
     tracks: [
       { title: "Last Call", length: "3:40" },
@@ -160,7 +179,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "Glass Antenna",
     year: 1983,
     genre: "Rock",
-    pressing: "12-inch EP",
+    type: "EP",
+    size: '12"',
     note: "Four songs, all chorus. Short enough for one side of coffee.",
     tracks: [
       { title: "Static Sky", length: "4:11" },
@@ -176,7 +196,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "June Okafor",
     year: 1964,
     genre: "Jazz",
-    pressing: "10-inch",
+    type: "LP",
+    size: '10"',
     note: "A short record by a long-tone trumpet. Start with the second side.",
     tracks: [
       { title: "Long Tone", length: "5:15" },
@@ -192,7 +213,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "The Lowfields",
     year: 1987,
     genre: "Rock",
-    pressing: "7-inch · 45 rpm",
+    type: "Single",
+    size: '12"',
     note: "Bright and fast. The B side was meant to be the hit.",
     tracks: [
       { title: "Neon Static", length: "3:02" },
@@ -208,7 +230,8 @@ export const initialRecords: VinylRecord[] = [
     artist: "The Marlow Sisters",
     year: 1968,
     genre: "Soul",
-    pressing: "LP",
+    type: "LP",
+    size: '12"',
     note: "Harmonies made for a slow morning and a second pot of coffee.",
     tracks: [
       { title: "Sunday Kitchen", length: "3:12" },

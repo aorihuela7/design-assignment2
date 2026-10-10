@@ -4,7 +4,7 @@ import { useMemo, useRef, useState, type RefObject } from "react";
 import { Badge, Button, Chip, CloseButton, control, Field, join, keepFocusInside, Select, TextInput } from "../design-systems/_shared/ui";
 import { Cover } from "./cover";
 import LogModal, { type NewRecord } from "./log-modal";
-import { GENRES, initialRecords, type Genre, type VinylRecord } from "./records";
+import { GENRES, initialRecords, metaOf, type Genre, type VinylRecord } from "./records";
 
 const label = "text-ds-label ds-label text-ds-muted";
 
@@ -51,8 +51,7 @@ function RecordCard({ record, selected, onOpen }: { record: VinylRecord; selecte
         </span>
         <span className="mt-auto flex flex-wrap items-center gap-x-ds-8 gap-y-ds-4 pt-ds-8">
           <span id={`${id}-meta`} className={label}>
-            {/* A non-breaking hyphen keeps "7-inch" on one line when the label wraps. */}
-            {[record.year, record.genre, record.pressing].filter(Boolean).join(" · ").replaceAll("-", "\u2011")}
+            {metaOf(record)}
           </span>
           {record.isNew && <Badge>New</Badge>}
           {selected && <span className="text-ds-label ds-label">✓ Open</span>}
@@ -89,7 +88,7 @@ function DetailPanel({ record, dialogRef, onClose }: { record: VinylRecord | nul
             {record.title}
           </h2>
           <p>{record.artist}</p>
-          <p className={`${label} mt-ds-8`}>{[record.year, record.genre, record.pressing].filter(Boolean).join(" · ")}</p>
+          <p className={`${label} mt-ds-8`}>{metaOf(record)}</p>
           {record.note && <p className="mt-ds-12 text-ds-muted">{record.note}</p>}
           <h3 className={`${label} mt-ds-24`}>Tracks</h3>
           {record.tracks.length > 0 ? (
@@ -116,7 +115,7 @@ export default function Collection() {
   // Logged records live in memory only; a reload brings back the original twelve.
   const add = (r: NewRecord) =>
     setRecords((rs) => [
-      { ...r, id: `logged-${rs.length}-${r.title}`, pressing: "", note: "", tracks: [], added: Math.max(...rs.map((x) => x.added)) + 1, isNew: true },
+      { ...r, id: `logged-${rs.length}-${r.title}`, note: "", tracks: [], added: Math.max(...rs.map((x) => x.added)) + 1, isNew: true },
       ...rs,
     ]);
   const [query, setQuery] = useState("");
